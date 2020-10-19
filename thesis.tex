@@ -16,17 +16,17 @@
     final
 ]{scrbook}
 
-
+\makeindex
 % details about your thesis
 \newcommand{\titel}{My very fancy thesis title.}
 \newcommand{\artderarbeit}{Bachelorarbeit}  % {Bachelorarbeit,Masterarbeit}
-\newcommand{\autor}{Georg Simon Ohm}
+\newcommand{\autor}{Lukas Welsch}
 \newcommand{\studiengang}{Informatik}  % {Informatik,Wirtschaftsinformatik,Medieninformatik}
-\newcommand{\matrikelnr}{123\,4567}
+\newcommand{\matrikelnr}{3201095}
 \newcommand{\erstgutachter}{Prof.\,Dr.~Korbinian Riedhammer}
-\newcommand{\zweitgutachter}{Prof.\,Dr.~Bartosz von\,Rymon\,Lipinski}
-\newcommand{\betreuer}{M.Sc.\,~Martina Schmidt}
-\newcommand{\unternehmen}{Musterfirma GmbH}
+\newcommand{\zweitgutachter}{Prof.\,Dr.~Jens Albrecht}
+\newcommand{\betreuer}{Dipl. Ing.\,~Andreas Sachs}
+\newcommand{\unternehmen}{Sopra Financial Technology GmbH}
 \newcommand{\logo}{figures/TH-Nuernberg-RGB.png}
 \newcommand{\keywords}{hot, fuzz}
  
@@ -51,7 +51,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern,relsize,textcomp,csquotes}
 \usepackage{amsmath,amsfonts}
-\usepackage[ngerman,english]{babel}  % flip for German thesis
+\usepackage[english,ngerman]{babel}  % flip for German thesis
 \usepackage[final]{graphicx}
 \usepackage{setspace,geometry,xcolor}
 \usepackage{makeidx}
@@ -137,27 +137,28 @@
 \setcounter{tocdepth}{2}  % ...but don't include them in toc
 
 \frontmatter
-\include{cover}\cleardoublepage
+\input{cover}\cleardoublepage
 
 % download the following form and complete it (hit save in your editor)
 % https://intern.ohmportal.de/fileadmin/Gelenkte_Doks/Abt/SZS/SB/SB_0050_FO_Pruefungsrechtliche_Erklaerung_und_Erklaerung_zur_Veroeffentlichung_der_Abschlussarbeit_public.pdf
 \includepdf{SB_0050_FO_Pruefungsrechtliche_Erklaerung_und_Erklaerung_zur_Veroeffentlichung_der_Abschlussarbeit_public.pdf}\cleardoublepage
 
-\include{content/0_abstract}\cleardoublepage
+\input{content/0_Abstrakt}\cleardoublepage
 
 \tableofcontents
 
 \mainmatter
-\include{content/1_intro}
-\include{content/2_data}
-\include{content/3_method}
-\include{content/4_experiments}
-\include{content/5_outlook}
-\include{content/6_summary}
+\input{content/1_Einleitung}
+\input{content/2_Grundlagen}
+\input{content/3_Daten}
+\input{content/4_Methoden}
+\input{content/5_Experimente}
+\input{content/6_Ausblick}
+\input{content/7_Fazit}
 
 % remove if not needed
 \appendix
-\include{content/a1_supplemental}
+\input{content/a1_supplemental}
 
 \backmatter
 \listoffigures
@@ -166,7 +167,7 @@
 \listoftables
 \cleardoublepage
 
-\renewcommand{\lstlistlistingname}{List of Listings}  % change for German thesis
+\renewcommand{\lstlistlistingname}{Auflistung}  % change for German thesis
 \lstlistoflistings
 \cleardoublepage
 
