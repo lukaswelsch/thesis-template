@@ -2,14 +2,40 @@
 
 \section{Definition von Datenqualität}
 Datenqualität wird in der Literatur auf verschiedene Arten definiert. 
+Viele Datenqualitätsstudien verwenden Korrektheit als einziges (oder als Haupt-) Datenqualitätsmerkmal. \cite{wang1996}
+Datenqualität umfasst jedoch nicht nur die Korrektheit von Daten, sondern auch anderen Dimensionen. 
+Ein Paper von 2011 zeigt den Einfluss von anderen Dimensionen, wie zb. Vollständigkeit auf die Erkennungsrate von Klassifikatoren \cite{espinosaoliva2011} Die Autoren schlagen vor den Aufbereitungsprozess und vor allem Datenqualität nicht nur auf die Korrektheit von Daten zu beziehen sondern auch auf die anderen Datenqualitätsdimensionen zu achten.
 
 \subsection{Datenqualitätsdimensionen}
-In der Literatur werden als Basisset der Datenqualitätsdimensionen Richtigkeit, Vollständigkeit, Konsistenz und Aktualität definiert. \cite{scannapieco2002}
+Die Dimensionen Richtigkeit, Vollständigkeit, Konsistenz und Aktualität werden in den meisten Veröffentlichungen genannt, allerdings gibt es keinen Standard, weder im Bezug auf die verwendeten Dimensionen, noch die Definition der Dimensionen. \cite{scannapieco2002}
+\textcolor{red}{Begründung finden! In dieser Arbeit werden diese Definition von Datenqualität verwendet, da es sich am Besten anbietet?}
+Jede dieser Datenqualitätsdimensionen umfasst eine Facette der Datenqualität.
+\\ \textbf{Richtigkeit}
+Richtigkeit wird als Gleichheit zwischen zwei Werten definiert, sodass die Daten die Wirklichkeit korrekt repräsentieren. 
+Beispiel: Eine Person mit dem Namen Max Mustermann ist als Mx Mustermann abgespeichert. 
+Die gespeicherten Daten repräsentieren nicht die Wirklichkeit, sie sind somit nicht richtig.
+\\ \textbf{Aktualität / temporäre Richtigkeit}
+Als Spezialisierung der Richtigkeit kann die temporäre Richtigkeit gesehen werden, die richtige Repräsentation zu einem bestimmten Zeitpunkt oder Zeitspanne beschreibt. 
+Die temporäre Richtigkeit zum aktuellen Zeitpunkt wird auch als Aktualität bezeichnet. 
+\\ \textbf{Vollständigkeit}
+Die Daten sind umfangreich genug für die jeweilige Aufgaben. \cite{wang1996}
+\\ \textbf{Konsistenz}
+
+
 
 \subsection{Definition / Metriken der Dimensionen}
 Um diese eher abstrakten Definitionen messbar zu machen haben sich einige Verfahren etabliert.
 Diese lassen sich grob in die Kategorien subjektiv und objektiv aufteilen. \cite{pipino2002}
-Bei den subjektiven Verfahren werden die Grenzwerte, ab wann die Datenqualität schlecht ist durch Experten geschätzt. 
-Die Experten geben oft auch ein Gefühl ab, ob sie die Datenqualität für gut oder schlecht halten.
-Der zweite Weg besteht darin die Datenqualität über mathematische Verfahren festzulegen.
-Allerdings werden auch hier häufig Experten benötigt, die die Grenzwerte schätzen.
+Bei den subjektiven Verfahren wird die vorherrschende Datenqualität durch Experten geschätzt. 
+Dieses Verfahren ist allerdings nicht nur zeitaufwendig für die Experten, sondern ist auch fehleranfällig. \textcolor{red}{\textbf{HIERZITATANGEBEN}} \cite{}
+
+Eine weitere Möglichkeit besteht darin objektive Verfahren zu verwenden, bei denen mit Hilfe von mathematischen Funktionen die Datenqualität berechnet oder geschätzt wird. 
+
+Des weiteren gibt es ein kombiniertes Verfahren, bei denen Grenzwerte von Experten geschätzt und anschließend durch mathematische Funktionen abgeglichen werden. 
+
+\subsection{Visualisierungen / Charts zur Darstellung der Metriken}
+Sollte zum Beispiel sehr gut interpretierbar sein.
+Genaue Vorgaben zu den Visualisierungen müssen allerdings von den Stakeholdern erfragt werden
+
+
+
