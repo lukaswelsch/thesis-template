@@ -14,13 +14,23 @@ Jede dieser Datenqualitätsdimensionen umfasst eine Facette der Datenqualität.
 Richtigkeit wird als Gleichheit zwischen zwei Werten definiert, sodass die Daten die Wirklichkeit korrekt repräsentieren. 
 Beispiel: Eine Person mit dem Namen Max Mustermann ist als Mx Mustermann abgespeichert. 
 Die gespeicherten Daten repräsentieren nicht die Wirklichkeit, sie sind somit nicht richtig.
-\\ \textbf{Aktualität / temporäre Richtigkeit}
+\\ \textbf{Aktualität / temporäre Richtigkeit / Zeitnähe}
 Als Spezialisierung der Richtigkeit kann die temporäre Richtigkeit gesehen werden, die richtige Repräsentation zu einem bestimmten Zeitpunkt oder Zeitspanne beschreibt. 
 Die temporäre Richtigkeit zum aktuellen Zeitpunkt wird auch als Aktualität bezeichnet. 
-\\ \textbf{Vollständigkeit}
-Die Daten sind umfangreich genug für die jeweilige Aufgaben. \cite{wang1996}
-\\ \textbf{Konsistenz}
 
+\\ \textbf{Vollständigkeit}
+Die Daten sind umfangreich genug für die jeweilige Aufgabe. \cite{wang1996} 
+Da ein Data Warehouse aus relationalen Datenbanken besteht, wird die Vollständigkeit im Folgenden auf relationale Datenbanken bezogen.
+Die Vollständigkeit wird von \cite{pipino2002} in drei Klassen kategorisiert.
+\begin{itemize}
+ \item Schema: Grad der Daten, die nicht im Schema fehlen
+ \item Spalte: Anzahl der fehlenden Werte innerhalb einer Spalte
+ \item Population: Wenn eine Spalte alle Institute (36,70..) beinhalten sollte, aber welche fehlen, dann herrscht Populationsunvollständigkeit
+\end{itemize}
+\textbf{Konsistenz}
+Die gleichen (redundanten) Datensätze haben die gleichen Werte in verschiedenen Tabellen. 
+Ein Beispiel für Konsistenz ist die referentielle Integrität, die sicherstellt, dass Datensätze nur auf existierende Datensätze verweisen.
+\\ \textbf{Appropriate Amount of Data, Believability, }
 
 
 \subsection{Definition / Metriken der Dimensionen}
@@ -32,6 +42,10 @@ Dieses Verfahren ist allerdings nicht nur zeitaufwendig für die Experten, sonde
 Eine weitere Möglichkeit besteht darin objektive Verfahren zu verwenden, bei denen mit Hilfe von mathematischen Funktionen die Datenqualität berechnet oder geschätzt wird. 
 
 Des weiteren gibt es ein kombiniertes Verfahren, bei denen Grenzwerte von Experten geschätzt und anschließend durch mathematische Funktionen abgeglichen werden. 
+Das kombinierte Verfahren kann auch durch ein Quadrat kombiniert werden, das an der y-Achse die subjektive Bewertung und auf der x-Achse die objektive Bewertung zeigt. 
+Bei einer guten Datenqualität liegt das Ergebnis im IV. Quadrant. \cite{pipino2002}
+
+
 
 \subsection{Visualisierungen / Charts zur Darstellung der Metriken}
 Sollte zum Beispiel sehr gut interpretierbar sein.
