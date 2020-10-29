@@ -2,13 +2,25 @@
 Um die nachfolgenden Methoden zur Analyse und Visualisierung von Datenqualität, zu vergleichen werden sowohl qualitative als auch quantitative Untersuchungen durchgeführt.
 
 Nach \cite{pipino2002} besteht die Schwierigkeit nicht darin die Metriken zu formulieren, sondern die Datenqualitätsdimension zu definieren, die auf den spezifischen Anwendungsbereich des Unternehmens passt. 
+Aus BI-Sicht ist es enorm wichtig, dass die Daten korrekt sind. 
+Beispielsweise würde es unnötige Kosten verursachen einem Kunden eine Werbung zu zusenden, wenn dieser schon umgezogen ist.
+Für diese Fehler kann als Indiz die Aktualität verwendet werden und Kunden können nicht angeschrieben werden, wenn die Wahrscheinlichkeit groß ist, dass diese schon umgezogen sind. 
+Nicht nur die Daten selbst müssen den Datenqualitätsanforderungen stimmen, sondern es muss auch sichergestellt werden, dass die ETL-Prozesse fehlerfrei ablaufen. 
+Sonst würden durch die Extraktionen und Anreicherungen neue Datenqualitätsfehler in den Daten entstehen.
 
 % (In Worten zusammengefasst und durch Statistiken und Schaubilder) 
-Metriken:
-
 
 \section{Metriken}
-Simple Ratio. 1 - Unvollständig / Vollständig
+
+\textbf{Simple Ratio:}
+Die Simple Ratio kann für die Dimensionen Richtigkeit, Vollständigkeit und Konsistenz verwendet werden und ist wie folgt aufgebaut: \cite{pipino2002}
+$$ 1 - \frac{erwartete Anzahl}{Gesamtzahl} $$
+Das Problem an der Simple Ratio liegt darin, dass nicht unbedingt bekannt ist, wie viele Daten zu erwarten sind. 
+Würden nur die null-Werte gezählt werden ist nicht klar, ob die Daten tatsächlich fehlen, unbekannt sind oder nicht existent.
+Bei einer Telefonnummer könnte null bedeuten, dass diese nicht bekannt ist, dass derjenige kein Telefon und somit keine Telefonnummer besitzt oder, dass nicht bekannt ist, ob es derjenige eine Telefonnummer besitzt. 
+Diese Metrik kann gut für die Überprüfung der Prozessqualität verwendet werden, da in diesem Fall die erwartete Anzahl und die Gesamtzahl bekannt sind.
+
+
 Desired outcomes to total outcomes 
 -> geeignet für Richtigkeit, Vollständgkeit, Konsistenz
 
@@ -18,10 +30,53 @@ Maximum operation
 
 Weighted Average. 
 
+\textbf{Wahrscheinlichkeitsverteilung zur Schätzung der Aktualität}
+Die Dimension Aktualität ist besonders Interessant für die Datenqualität, da diese als Wahrscheinlichkeit angegeben werden kann.
+Hierfür gibt es verschiedene Ansätze, der aktuellste liegt darin eine Wahrscheinlichkeits- bzw. Dichtefunktion zu schätzen und anhand dieser konkrete Wahrscheinlichkeiten zu berechnen, ob die Daten schon veraltet sind.
+Um diese Dichte zu schätzen können externe Daten verwendet werden (wie oft ziehen Menschen um, wie viele Eheschließung gibt, wie oft lassen sich Paare scheiden).
+Da in diesem Fall auf einen vollständig historisierten Datensatz zurückgegriffen werden kann, kann die Dichtefunktion anhand der durchschnittlichen Lebensdauer der Attribute berechnet werden.
+Dabei ist sehr kritisch zu betrachten, dass die Daten aus denen die Funktion geschätzt wird, selbst Fehler enthalten können. 
+
+Aktualität:
+- Externe Daten verwenden zb. Anzahl der Eheschließungen / Scheidungen) 
+- historische Daten aus dem Data Warehouse, wie lange ist im Schnitt eine Adresse gültig
+- Wie lange ist im Schnitt ein Attribut gültig
+--> Achtung! Daten, die zur Berechnung genommen werden können selbst von schlechter DQ sein
+--> Das ist kritisch zu betrachten
+
+
+Stichproben für Schätzung
+
+
+Vollständigkeit: Metrik entwickeln!
+
 
 \section{Bestehende Verfahren}
 Richtigkeit
-Um die Richtigkeit zu berechnen gibt es zwei verschiede Möglichkeiten. 
+Um die Richtigkeit zu berechnen gibt es zwei verschiedene Möglichkeiten. 
+
+
+\subsection{Sicherstellung der korrekten Prozesse}
+Ein weiterer wichtiger Aspekt guter Datenqualität besteht darin die Prozesse der Extraktionen so zu gestalten, dass diese fehlerfrei sind.
+
+Vollständigkeit auf Datensatzebene
+Vollständigkeit auf Attributwerte (es kommen keine null-values hinzu)
+
+
+Aktualität die Daten werden schnell genug abgeholt
+Richtigkeit die Daten werden so abgeholt, dass sie fehlerfrei sind
+
+Ideen:
+- Source und Target vergleichen
+- historisch vergleichen, wie viel zu erwarten ist
+- 
+
+Die Daten müssen innerhalb einer vorgelegten Range liegen, damit sichergestellt wird, dass die Daten in dem Zielsystem richtig ankommen.
+
+
+
+Zuverlässigkeit, Protokollierung, Dokumentation, Audit der Prozesse
+ Verfügbarkeit, Wartbarkeit, Nachvollziehbarkeit
 
 
 \section{Stakeholderanalyse}
