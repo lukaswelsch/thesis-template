@@ -1,0 +1,36 @@
+Verarbeitungspipeline
+- Kafka
+
+1. Datensammeln und vorverarbeiten
+2. Speichern in Datenbank
+3. Analysieren und Anzeigen in Dashboards
+-> Regelbasierte Lösung
+
+4. Trainieren eines Modells
+
+
+Herausforderungen
+- Viele Daten
+- Datenformate der Logs passen nicht
+- Saisonale Schwankungen (sind nicht unbedingt Anomalien)
+- Fehlalarme nach Update
+
+
+1. Logdaten preprocessing
+2. Sliding Window Log Eintärge in einem Zeitintervall zählen
+3. Berechnung der relativen Veränderung zw. den Zeitfenstern
+4. Anomalien erkennen indem ein Schwellwert definiert wird
+-> schwellen zu definieren sind sehr schwer
+5. Timeline series bilden für jede ungewöhnle 
+6. clustering
+7. Process Map 
+(Process Mining) 
+
+Ursache / Wirkung kann erkannt werden 
+Übergangswahrscheinlichkeiten
+
+Kann regelbasiert nur ergänzen nicht ersetzen (Verbesserung) 
+
+
+TimeSeries Cluster Algorithmus
+Ursache Wirkung Verbindung muss bestehen

@@ -1,6 +1,56 @@
 \chapter{Experimente}\label{ch:experiments}
 %Auf Validität und Reliabilität achten!
 
+
+- Aufbau des ETL-Prozesses - 
+
+            ML     ML
+-> BASE -> SRC -> BIZ
+
+\section{ML-Experimente (evtl in genaues Verfahren umbennen)}
+Scoringverfahren:
+
+Vollständigkeit
+- Fehlen Scoring ergebnisse können diese nachberechnet werden
+
+Akutalität
+- Sind die Scoring werte veraltet so können diese neu berechnet werden
+
+
+Richtigkeit
+- Überprüfung der Richtigkeit schwierig, da mit Daten gearbeitet wird, die evtl. selbst nicht richtig sind. 
+
+Was sind Daten die Einfluss auf das Kundenrating haben?
+-> Für welche Daten wäre es besonders wichtig die Datenqualität händisch zu überprüfen
+
+
+
+
+
+- In den Datensatz werden die typischen Fehler eingebaut:
+
+Vollständigkeit
+- Felder sind null 
+- Zeilen fehlen
+
+Richtigkeit
+- Daten haben Fehler zb. Umsatz ist zu groß
+- Prozentzahl des Zinssatzes sind falsch
+- Datum ist invalide
+
+Aktualität
+- Daten sind zu Alt
+
+
+Konsistenz
+-> Hinzufügen von einigen fiktiven Daten 
+- Daten werden summiert und anhand der Summen wird erkannt, ob diese sehr abweichen
+
+
+
+
+-
+
 Aufbau Experimente: 
 Ziele*ʹ Aufbau*ʹ Ergebnisse*' Interpretation*ʹ Threats*to*Validity
 (Seite 93 https://userpages.uni-koblenz.de/~laemmel/esecourse/slides/perf.pdf)
@@ -15,14 +65,17 @@ Ideen:
 - Mit SQL: 
 https://dataform.co/blog/advanced-data-quality-testing
 
-Fragen:
-- Woher richtige Daten bekommen?
 
+\section{Fragebogen}
+
+- Fragebogen an die Stakeholder (Es besteht die Möglichkeit durch einen Fragebogen die vorherrschende Datenqualität mit Hilfe der Stakeholder zu berechnen. \cite{pipino2002})
 
 Auf die verschiedenen Ebenen Aktualität, Richtigkeit, Vollständigkeit und Konsistenz eingehen!
 Oft ist es besser die Daten nachzufordern, anhand eines möglichen Fehlers kann nicht der Originalzustand wiederhergestellt werden
 
 \section{Visualisierung}
+Kibana, Graphana
+
 Reduktion der Datenmenge
 
 
