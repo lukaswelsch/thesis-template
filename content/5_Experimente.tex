@@ -24,27 +24,36 @@ Was sind Daten die Einfluss auf das Kundenrating haben?
 -> Für welche Daten wäre es besonders wichtig die Datenqualität händisch zu überprüfen
 
 
+ML-Verfahren, immer inklusive Performance-Grafik:
+- logistische Regression
 
 
+Ziele:
+- Vorhersagen des Risikoscorings anhand der Inputdaten
 
-- In den Datensatz werden die typischen Fehler eingebaut:
-
-Vollständigkeit
-- Felder sind null 
-- Zeilen fehlen
-
-Richtigkeit
-- Daten haben Fehler zb. Umsatz ist zu groß
-- Prozentzahl des Zinssatzes sind falsch
-- Datum ist invalide
-
-Aktualität
-- Daten sind zu Alt
+Aufbau:
+- python als Programmiersprache
+- Aufteilen in train-dev-test
+- 
 
 
-Konsistenz
--> Hinzufügen von einigen fiktiven Daten 
-- Daten werden summiert und anhand der Summen wird erkannt, ob diese sehr abweichen
+\subsection{KNN}
+
+Variabilität (Einfluss der Parameter auf das Ergebnis):
+- verschiedene k-Werte 
+- Manhattan vs. Euklidische Distanz
+
+
+\subsection{SVM (Multiklassen)}
+
+Verschiedene Parameter:
+- unterschiedl. Kernelfunktionen
+- C-Parameter, der über Slackvariablen gesteuert wird
+- 
+
+- Neuronale Netze
+
+- Classifikation Tree
 
 
 
@@ -66,14 +75,20 @@ Ideen:
 https://dataform.co/blog/advanced-data-quality-testing
 
 
-\section{Fragebogen}
 
-- Fragebogen an die Stakeholder (Es besteht die Möglichkeit durch einen Fragebogen die vorherrschende Datenqualität mit Hilfe der Stakeholder zu berechnen. \cite{pipino2002})
 
 Auf die verschiedenen Ebenen Aktualität, Richtigkeit, Vollständigkeit und Konsistenz eingehen!
 Oft ist es besser die Daten nachzufordern, anhand eines möglichen Fehlers kann nicht der Originalzustand wiederhergestellt werden
 
 \section{Visualisierung}
+
+%https://www.elastic.co/guide/en/kibana/6.8/createvis.html
+
+Integration der Daten in Kibana
+- ETL Prozess zur automatischen Erzeugung einer CSV-Datei.
+- Logstash?
+- 
+
 Kibana, Graphana
 
 Reduktion der Datenmenge
@@ -81,6 +96,6 @@ Reduktion der Datenmenge
 
 
 - Welche Visualisierungen bieten sich an?
-- Gibt es evtl Visualisierungen, die DQ-Probleme aufzeigen?
+- Gibt es evtl. Visualisierungen, die DQ-Probleme aufzeigen?
 
 

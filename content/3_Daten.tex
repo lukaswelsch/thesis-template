@@ -20,6 +20,26 @@ Kredite und Erfahrungen hieraus, sowie Art und Anzahl der Kredite.
 
 
 
+Alter
+Arbeitgeber
+ausgeübter Beruf
+Beschäftigungsdauer im ausgeübten Beruf
+Bürge vorhanden
+Einkommensklasse
+Einkommen, verfügbares
+Familienstand
+Geschlecht
+Haftende
+Haushaltstyp
+Kfz-Besitz
+Kinderanzahl
+Kredite in Stück (eigene)
+Nettokreditbetrag
+Nationalität
+Schufa
+Wohndauer
+nach 
+\cite{sokol2005}
 
 
 Im vorliegenden Projekt wird zunächst mit den Entwicklungsdaten gearbeitet, da diese im wesentlichen den produktiven Daten entsprechen.
@@ -29,13 +49,13 @@ Zunächst sollte sich eine Übersicht über die Daten beschafft werden:
 
 
 \begin{lstlisting}[language=SQL,caption={Überblick über die Daten},captionpos=b]
-SELECT VALID_DT, COUNT(VALID_DT) 
+SELECT VALIDDT, COUNT(VALIDDT) 
 FROM SCHEMA.STAMMDATEN 
 GROUP BY VALID_DT 
 ORDER BY VALID_DT
 \end{lstlisting}
 Anhand dieser Abfrage lassen sich die Anzahl der Daten zu den jeweiligen Tagen bestimmen. 
-Beispielhaft wird mit einem aktuellen VALID_DT gearbeitet. 
+Beispielhaft wird mit einem aktuellen VALIDDT gearbeitet. 
 Folgende Spalten sind in der Tabelle vorhanden:
 
 

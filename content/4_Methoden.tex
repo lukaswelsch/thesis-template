@@ -1,42 +1,53 @@
 \chapter{Methoden}\label{ch:method}
-Um die nachfolgenden Methoden zur Analyse und Visualisierung von Datenqualität, zu vergleichen werden sowohl qualitative als auch quantitative Untersuchungen durchgeführt.
+Um die nachfolgenden Methoden zur Analyse und Visualisierung von Datenqualität zu vergleichen, werden sowohl qualitative als auch quantitative Untersuchungen durchgeführt.
 Für eine Datenqualität, die sich in einem Unternehmen etablieren kann, ist es nötig diese von den Gesichtspunkten aller Stakeholdern zu betrachten.
 Anhand einer Stakeholderanalyse wird es möglich sein die Probleme der Datenqualität auf zwei Ebenen zu betrachten. 
-Zum einen die der Business-User, die gute Datenqualität benötigen, um Kampagnen (Werbung) gezielt an die richtigen Kunden zu senden.
-Zum anderen benötigen die Entwickler eine Validierung (Überprüfungsmöglichkeit) für die ETL-Prozesse, die sie entwickelt haben, um sicherzustellen, dass diese keine (neuen) Datenqualitätsprobleme erzeugen. 
+Zum einen benötigen die Business-User gute Datenqualität, um die richtigen Zinsen anhand des Risikoscorings zu vergeben.
+%Datakitchen
+
+
+%Zum anderen benötigen die Entwickler eine Validierung (Überprüfungsmöglichkeit) für die ETL-Prozesse, die sie entwickelt haben, um sicherzustellen, dass diese keine (neuen) Datenqualitätsprobleme erzeugen. 
 % (In Worten zusammengefasst und durch Statistiken und Schaubilder) 
 
 
 \section{Stakeholderanalyse}
 Mit Hilfe einer Stakeholderanalyse ist es möglich, die negativen Einflüsse zu erkennen und die positiven Einflüsse zu nutzen.
-Zum Anderen können die Erwartungen der einzelnen Stakeholder erkannt werden und die Projektziele richtig gewichtet werden. 
-
-Es besteht die Möglichkeit durch einen Fragebogen die vorherrschende Datenqualität mit Hilfe der Stakeholder zu berechnen. \cite{pipino2002}
-Dies fällt unter den subjektive Messbarkeit der Datenqualität und \textit{wird im Kapitel 5.Experimente durchgeführt und dargestellt.}
-
-1. Identifikation
-2. Information und Analyse
-3. Aktionsplanung
-4. Monitoring
+Zum Anderen können die Erwartungen der einzelnen Stakeholder erkannt und die Projektziele richtig gewichtet werden. 
 
 
-- Der Benutzer von Daten
-- Der Entwickler
-- Der, der zur Einhaltung der korrekten Datenqualität da ist
+% 1. Identifikation
+% 2. Information und Analyse
+% 3. Aktionsplanung
+%4. Monitoring
 
 
-Nach \cite{pipino2002} gibt es drei Stakeholder: the collector, custodians and consumers of data products.  
+% - Der Benutzer von Daten
+%- Der Entwickler
+% - Der, der zur Einhaltung der korrekten Datenqualität da ist
 
-Aufgrund der Analyse des mittelständischen Unternehmens in der Bankenbranche können folgende Stakeholder identifiziert werden: \\
+
+% Nach \cite{pipino2002} gibt es drei Stakeholder: the collector, custodians and consumers of data products.  
+
+Aufgrund der Analyse des mittelständischen Unternehmens in der Bankenbranche können folgende Stakeholder identifiziert werden:
+\begin{itemize}
+\item Entwickler
+\item Business User
+\item Bankkunde
+\end{itemize}
+
 Als Stakeholder lassen sich zunächst die Entwickler identifizieren.
 Diese sind für die Einhaltung einer guten Datenqualität unmittelbar wichtig, da diese die Extraktionsprozesse entwickeln, die zu Fehlern in der Datenqualität führen können.
-Auf der anderen Seite gibt es die Business User, die Kampagnen für die Banken entwickeln, um beispielsweise neue Kunden zu gewinnen. 
-Auch für diese Gruppe von Personen ist es wichtig, dass die Daten fehlerfrei sind, da sonst (evtl.) Kunden angesprochen werden, die gar nicht relevant für die Kampagne sind.
-Eine weitere Rolle ist die des Datenmanagers, der überprüft, ob die Datenqualität gut genug ist und diese im Überblick behält und gegebenenfalls Maßnahmen zur Besserung einleitet. 
-Des weiteren ist der Kunde ein Bestandteil einer datenverarbeitenden Abteilung. 
-Dieser erwartet nicht nur, dass die Daten fehlerfrei sind, sondern auch, dass diese immer verfügbar sind. 
-Der Aspekt der Verfügbarkeit der Daten hat nur bedingt etwas mit der Datenqualität zu tun und wird deshalb nicht weiter in dieser Arbeit betrachtet.
-Für ein umfassendes Projekt, bei dem alle Stakeholder zufriedengestellt werden, müsste dieser Aspekt in die Konzeption einfließen.
+
+Auf der anderen Seite gibt es die Business User, die die Gesamtbanksteuerung übernehmen.
+Bei diesem Teilgebiet wird errechnet, wie gut die Zinssätze sein dürfen, sodass die Bank Gewinn erzielt und gleichzeitig möglichst viele Kunden zufrieden stellen kann.
+Für diesen Stakeholder sind alle Dimensionen wichtig, da nur mit einer sehr guten Datenqualität eine optimale Gesamtbanksteuerung vorgenommen werden kann. 
+Würde der Stakeholder nur über falsche, unvollständige und veraltete Daten verfügen, könnte dies fatale Folgen für die Bank haben.
+Als besonders entscheidend ist für diesen Stakeholder, dass das Risikoscoring richtig und aktuell ist.
+Beim Risikoscoring werden die Daten der Kunden an einen externen Dienstleister gesendet, dieser berechnet einen Score, anhand dessen die Zinsvergabe erfolgt.
+
+Des weiteren ist der Bankmitarbeiter Bestandteil der Kreditvergabe. 
+Die Kreditvergabe erfolgt anhand einer Bewertung des Kunden, je nachdem wie gut das Scoring des Kunden ist, umso bessere Zinssätze bekommt dieser.
+Für den Bankmitarbeiter ist es wichtig, dass die Daten zum Risikoscoring sowohl richtig als auch aktuell sind.
 
 Die beschriebenen Stakeholder werden mit ihren Erwartungen an das Projekt in der folgenden Grafik dargestellt.
 
@@ -51,10 +62,6 @@ S4 & (Bank)-Kunde & h          & Daten müssen immer verfügbar und richtig sein
 
 Welchen Stakeholder interessiert welche Dimension?
 
-
-Die Entwickler benötigen einen Mechanismus oder ein Programm, dass ihnen zeigt, ob durch eine Neuentwicklung Fehler in den Datenentstehen, hier ist besonders die Datenqualitätsdimension Vollständigkeit wichtig. 
-
-
 \begin{tabular}[h]{l|l|l}
 Stakeholder & Dimension & Begründung \\ \hline
 Entwickler & Vollständigkeit & (Wurden alle Daten vom Quellsystem abgeholt) \\ \hline
@@ -64,71 +71,119 @@ Kunde & Keine Dimension & Geht davon aus, dass die Datenqualität schon geprüft
 \end{tabular}
 
 
+Für Welche Stakeholder kann sollte welches Verfahren angewendet werden?
+- Business User: Risikoscoring sollte immer aktuell sein, dabei kann ein ML Verfahren verwendet werden, um die Daten zu klassifizieren und bei großer Abweichung können diese Daten dann aktualisiert oder neu angefordert werden.
+
+- Bank Mitarbeiter: ?
+- 
+
+In dieser Bachelorarbeit wird die Verwendung von Machine Learning Verfahren zur Verbesserung der Datenqualität untersucht.
+Deshalb bietet sich das Thema Risikoscoring am besten an, da es feste Ausgangswerte (Labels) bietet, die trainiert werden können.
+Der trainierte Klassifikator kann anschließend verwendet werden, um zu berechnen, ob ältere Risikoscorings vom Ergebnis des Klassifikators abweichen.
+Denn es können sich Attribute aktualisieren, die einen positiven oder negativen Einfluss des Risikoscorings zur Folge haben. 
+Allerdings wird das Risikoscoring nicht regelmäßig aktualisiert, da eine Aktualisierung Geld kostet.
+Grundvoraussetzung für dieses Vorhaben ist die Risikoscorings anhand von aktuellen Daten mit hoher \colorbox{green}{Präzision} vorherzusagen. 
+Dafür werden nachfolgend Klassifikatoren ausgewählt und anschließend im Kapitel Experimente geprüft und ausgewertet.\\
+Allerdings sollten auch für die anderen Stakeholder Verfahren entwickelt werden, um die Datenqualität zu verbessern.
+Dies beinhaltet unter anderem eine Peer-Review, um die Codequalität sicherzustellen, sowie statische Code-Analysen.
+Eine bessere Codequalität führt zu einer besseren Datenqualität, da keine bzw. weniger menschliche Fehler im System erzeugt werden.
+Des weiteren ist es notwendig die Datenbankschemas gut und exakt zu definieren, sodass keine null-Werte an Stellen eingefügt werden, an denen es keine null-Werte geben darf.
+Diese Lücken in den Daten sollten immer mit einem Default-Wert belegt werden und null-Values zu einem Abbruch der ETL-Strecken führen.
+Dadurch kann die Dimension der Vollständigkeit verbessert werden.
+Auch Log-Dateien die Aussagen über den ETL-Prozess liefern, können hilfreich sein und sollten ausgewertet werden.
+\colorbox{green}{Aufzeigen, warum es wichtig ist auch Visualisierungen zu verwenden, um Datenqualität zu analysieren}
+
 
 \section{Metriken}
 Nach \cite{pipino2002} besteht die Schwierigkeit nicht darin die Metriken zu formulieren, sondern die Datenqualitätsdimension zu definieren, die auf den spezifischen Anwendungsbereich des Unternehmens passt. 
-Aus BI-Sicht ist es enorm wichtig, dass die Daten korrekt sind. 
-Beispielsweise würde es unnötige Kosten verursachen einem Kunden eine Werbung zu zusenden, wenn dieser schon umgezogen ist.
-Für diese Fehler kann als Indiz die Aktualität verwendet werden und Kunden können nicht angeschrieben werden, wenn die Wahrscheinlichkeit groß ist, dass diese schon umgezogen sind. 
-Nicht nur die Daten selbst müssen den Datenqualitätsanforderungen stimmen, sondern es muss auch sichergestellt werden, dass die ETL-Prozesse fehlerfrei ablaufen. 
-Sonst würden durch die Extraktionen und Anreicherungen neue Datenqualitätsfehler in den Daten entstehen.
+
+%Evtl. kann hier doch noch die Simple Ratio verwendet werden, um die Anzahl der falschen Daten, die das ML errechnet anzuzeigen.%
 
 
-\textbf{Simple Ratio:}
-Die Simple Ratio kann für die Dimensionen Richtigkeit, Vollständigkeit und Konsistenz verwendet werden und ist wie folgt aufgebaut: \cite{pipino2002}
-$$ 1 - \frac{erwartete Anzahl}{Gesamtzahl} $$
-Das Problem an der Simple Ratio liegt darin, dass nicht unbedingt bekannt ist, wie viele Daten zu erwarten sind. 
-Würden nur die null-Werte gezählt werden ist nicht klar, ob die Daten tatsächlich fehlen, unbekannt sind oder nicht existent.
-Bei einer Telefonnummer könnte null bedeuten, dass diese nicht bekannt ist, dass derjenige kein Telefon und somit keine Telefonnummer besitzt oder, dass nicht bekannt ist, ob es derjenige eine Telefonnummer besitzt. 
-Diese Metrik kann gut für die Überprüfung der Prozessqualität verwendet werden, da in diesem Fall die erwartete Anzahl und die Gesamtzahl bekannt sind.
-
-
-Desired outcomes to total outcomes 
--> geeignet für Richtigkeit, Vollständgkeit, Konsistenz
-
-
-Maximum operation
--> geeignet für Aktualität
-
-Weighted Average. 
-
-\textbf{Wahrscheinlichkeitsverteilung zur Schätzung der Aktualität}
-Die Dimension Aktualität ist besonders Interessant für die Datenqualität, da diese als Wahrscheinlichkeit angegeben werden kann.
-Hierfür gibt es verschiedene Ansätze, der aktuellste liegt darin eine Wahrscheinlichkeits- bzw. Dichtefunktion zu schätzen und anhand dieser konkrete Wahrscheinlichkeiten zu berechnen, ob die Daten schon veraltet sind.
-Um diese Dichte zu schätzen können externe Daten verwendet werden (wie oft ziehen Menschen um, wie viele Eheschließung gibt, wie oft lassen sich Paare scheiden).
-Da in diesem Fall auf einen vollständig historisierten Datensatz zurückgegriffen werden kann, kann die Dichtefunktion anhand der durchschnittlichen Lebensdauer der Attribute berechnet werden.
-Dabei ist sehr kritisch zu betrachten, dass die Daten aus denen die Funktion geschätzt wird, selbst Fehler enthalten können. 
-
-Aktualität:
-- Externe Daten verwenden zb. Anzahl der Eheschließungen / Scheidungen) 
-- historische Daten aus dem Data Warehouse, wie lange ist im Schnitt eine Adresse gültig
-- Wie lange ist im Schnitt ein Attribut gültig
---> Achtung! Daten, die zur Berechnung genommen werden können selbst von schlechter DQ sein
---> Das ist kritisch zu betrachten
-
-
-Stichproben für Schätzung
-
-
-Vollständigkeit: Metrik entwickeln!
-
-
-
-\section{Auf Datenebene}
-
-
-Richtigkeit
-Um die Richtigkeit zu berechnen gibt es zwei verschiedene Möglichkeiten. 
-
-\subsection{Machine Learning}
-- Unüberwachtes Lernen findet mögliche Fehlerquellen
+\section{Machine Learning}
+Mögliche Ansatzweise, die nicht weiterverfolgt wird:
+- Unüberwachtes Lernen findet mögliche Fehlerquellen (Daten, die ungewöhnlich aussehen)
 - Fehlerquellen werden identifiziert
 - Mit neuen Daten (Labels) können Experimente durchgeführt werden 
 
+\subsection{Risikoscoring}
+Nachberechnung des Risikoscorings, um zu überprüfen, welche Daten aktualisiert werden sollten.
+Weicht der Wert bei einigen Daten sehr ab, kann die Fachabteilung für diese Daten neue anfordern.
+Dies verbessert die Dimensionen der Richtigkeit und vor allem der Aktualität, die ein Teilgebiet der Richtigkeit darstellt.
 
-\subsection{Visualisierung}
+Vollständigkeit
+Da das Risikoscoring eine wichtige Entscheidungsgröße für die Banken ist, ist davon auszugehen, dass dieses Feld nie leer ist.
+Falls das Feld doch leer ist, sollten die Daten neu angefordert werden. 
 
-- Kibana 
+
+Es müssen feste Gruppen vorhergesagt werden, deshalb bieten sich Klassifikationsalgorithmen an
+Die Gruppen sind 1A bis 4E. 
+
+KNN \\
+Das Grundprinzip des K-Nearest-Neighbor Klassifikators besteht darin die Distanzen eines neuen Punktes zu allen anderen Punkten zu berechnen, um anschließend diesem einer Klasse zuzuordnen.
+Für die Zuordnung der Klassen werden die k-nächsten Punkte verwendet.
+Hierbei können verschiedene Distanzmetriken verwendet werden. 
+Diese sind zum Beispiel die euklidische Distanz oder die Manhattan Distanz.
+
+
+Support Vector Machine (SVM) (mit Multiklassenerweiterung) \\
+Die Idee der SVM besteht darin eine ideale Trennlinie zwischen zwei Gruppen zu finden. 
+Hierfür werden sogenannte Stützvektoren (Support Vectors) berechnet, indem eine mathematische Gleichung gelöst wird.
+Die Support Vector Machine ist in der Lage Zweiklassen-Probleme zu lösen.
+Da allerdings in dem vorliegenden Datensatz allerdings mehrere Klassen gibt, ist es notwendig eine Multiklassenerweiterung zu verwenden.
+Hierbei wird in der Implementierung von Sklearn One vs One verwendet. 
+Bei diesem Verfahren werden Kombinationen gebildet, bei denen jede Klasse im Vergleich zu einer anderen trainiert wird.
+Um das Ergebnis einer Vorhersage zu erhalten, wird die gewählt, dessen Summe der einzelnen Vorhersagen am Größten ist. 
+\\ 
+Zur Berechnung der benötigten Vergleiche kann folgende Formel verwendet werden:\\
+(NumClasses * (NumClasses – 1)) / 2
+
+
+- logistische Regression
+
+- Neuronale Netze
+
+- Classifikation Tree
+
+Standardisierung
+(Min/Max)-Normierung : Abbilden der Merkmale auf den Wertebereich [0,1]
+
+
+Für Adressdaten (diese sind Texte mit denen ein ML Verfahren nicht so gut umgehen kann):
+-> verwende GPS Daten, die aus PLZ berechnet wurde, damit die Daten einen Zusammenhang haben (Nähe der GPS Koordinaten)
+https://pypi.org/project/pyGeoDb/
+
+Da es einige Features gibt, muss evtl. zuerst eine Dimensionsreduktion vorgenommen werden.
+
+
+Modellbewertung:
+- Accuracy
+- Precision und Recall
+- Sensitivity und Specifity
+- F-Score
+
+
+Holdout
+k-Fold
+stratified k-Fold
+
+Optimierung von Hyperparametern 
+-> Einteilen in Train/Dev/Test
+
+Vergleichen der versch. ROC-Kurven:
+ROC / AUC
+
+\subsection{Auswirkungen der einzelnen Merkmale auf das Gesamtscoring}
+Es ist wichtig zu wissen, wie sich das Scoring zusammensetzt, um gezielt die Daten zu verbessern, die einen großen Einfluss haben. 
+
+
+
+Wie groß sind die Auswirkungen der einzelnen Merkmale auf das Gesamtscoring. 
+
+\section{Visualisierung}
+
+- Kibana Daten
+- Dashboard für Ampel logik
 
 \section{Sicherstellung der korrekten Prozesse}
 Ein weiterer wichtiger Aspekt guter Datenqualität besteht darin die Prozesse der Extraktionen so zu gestalten, dass diese fehlerfrei sind.
@@ -154,10 +209,3 @@ Zuverlässigkeit, Protokollierung, Dokumentation, Audit der Prozesse
 
 
 
-
-
-
-
-You can also include listings from a file directly:
-
-\lstinputlisting[language=Python,caption={This is an example of included listing},captionpos=b]{listings/example.py}
