@@ -2,51 +2,61 @@
 Um die nachfolgenden Methoden zur Analyse und Visualisierung von Datenqualität zu vergleichen, werden sowohl qualitative als auch quantitative Untersuchungen durchgeführt.
 Für eine Datenqualität, die sich in einem Unternehmen etablieren kann, ist es nötig diese von den Gesichtspunkten aller Stakeholdern zu betrachten.
 Anhand einer Stakeholderanalyse wird es möglich sein die Probleme der Datenqualität auf zwei Ebenen zu betrachten. 
-Zum einen benötigen die Business-User gute Datenqualität, um die richtigen Zinsen anhand des Risikoscorings zu vergeben.
+Zum einen benötigen die Business-User gute Datenqualität, um die richtigen Zinsen anhand des Risikoscorings zu vergeben und auf der anderen Seite benötigen die Entwickler eine Möglichkeit, um ihre ETL-Strecken zu überprüfen.
+Für diese beiden Probleme können zwei verschiedene Verfahren eingesetzt werden.
+Zur Identifikation und Überprüfung des Risikoscores kann ein Machine Learning Algorithmus trainiert werden, der die korrekten Werte vorhersagt und somit einen Aufschluss darüber gibt, wie viele Datensätze aktualisiert werden sollten.
+Um die ETL-Strecken zu analysieren sind die Metadaten zu den Prozessen nötig, die anzeigen, wie viele Daten an jedem Tag extrahiert wurden. 
+Auffälligkeiten können dann genutzt werden, um Maßnahmen einzuleiten.
+Hierfür bietet sich eine Visualisierung an, die in Echtzeit die Daten geliefert bekommt und anschließend interpretierbar darstellt.
+Die beiden beschriebenen Verfahren werden in dem Kapitel Experimente durchgeführt. 
 %Datakitchen
 
-
-%Zum anderen benötigen die Entwickler eine Validierung (Überprüfungsmöglichkeit) für die ETL-Prozesse, die sie entwickelt haben, um sicherzustellen, dass diese keine (neuen) Datenqualitätsprobleme erzeugen. 
-% (In Worten zusammengefasst und durch Statistiken und Schaubilder) 
 
 
 \section{Stakeholderanalyse}
 Mit Hilfe einer Stakeholderanalyse ist es möglich, die negativen Einflüsse zu erkennen und die positiven Einflüsse zu nutzen.
-Zum Anderen können die Erwartungen der einzelnen Stakeholder erkannt und die Projektziele richtig gewichtet werden. 
+Zum Anderen können die Erwartungen der einzelnen Stakeholder erkannt und die Projektziele richtig gewichtet werden. \\
+Die Stakeholderanalyse wird nach folgenden Schritten durchgeführt: 
 
+\begin{enumerate}
+ \item Identifikation
+ \item Information und Analyse 
+ \item Aktionsplanung
+ \item Monitoring
+\end{enumerate}
 
-% 1. Identifikation
-% 2. Information und Analyse
-% 3. Aktionsplanung
-%4. Monitoring
+% Nach \cite{pipino2002} gibt es drei Stakeholder: the collector (Sammler) , custodians (Verwalter) and consumers (Verbraucher) of data products.  
 
-
-% - Der Benutzer von Daten
-%- Der Entwickler
-% - Der, der zur Einhaltung der korrekten Datenqualität da ist
-
-
-% Nach \cite{pipino2002} gibt es drei Stakeholder: the collector, custodians and consumers of data products.  
-
-Aufgrund der Analyse des mittelständischen Unternehmens in der Bankenbranche können folgende Stakeholder identifiziert werden:
+Aufgrund der Analyse des mittelständischen Unternehmens aus der Bankenbranche können folgende Stakeholder identifiziert werden:
 \begin{itemize}
-\item Entwickler
-\item Business User
-\item Bankkunde
+\item Entwickler            % 
+\item Business User         % Verbraucher
+\item Bankmitarbeiter       % Sammler
+\item Product Owner         % Verwalter
 \end{itemize}
 
 Als Stakeholder lassen sich zunächst die Entwickler identifizieren.
 Diese sind für die Einhaltung einer guten Datenqualität unmittelbar wichtig, da diese die Extraktionsprozesse entwickeln, die zu Fehlern in der Datenqualität führen können.
+%Warum kann es überhaupt passieren, dass nicht alle Daten exportiert werden?
+Die Daten werden von einem legacy-System in das Data Warehouse übertragen, indem die Daten aus einer hierarchischen Datenbank als Datei abgelegt werden.
+Ein Prozess iteriert über alle Dateien und extrahiert die Daten, die dann neu strukturiert im Data Warehouse abgelegt werden.
+Aufgrund von einigen Problemen in der Extraktion kann es dazu führen, dass die Daten nicht korrekt extrahiert werden.
+Für diesen Fall gibt es eine Überwachung der Programme, die einen Fehler meldet.
+%Probleme: Keine Datei wird mehr an einem Ordner abgelegt, weil fehler im anderen System -> keiner merkt was, Daten nicht mehr aktuell
+%Probleme: Zweite Änderung während Extraktion läuft -> Primärschlüssel doppelt -> deduplizierung -> wenn fehler in Primkey, dann werden ganz viele Daten gelöscht, was ungewöhnlich ist
+%Allerdings werden die Dateien teilweise nicht schnell genug abgeholt und die Daten werden überschrieben
 
-Auf der anderen Seite gibt es die Business User, die die Gesamtbanksteuerung übernehmen.
+Auf der anderen Seite gibt es die Business User, die beispielsweise die Gesamtbanksteuerung übernehmen.
 Bei diesem Teilgebiet wird errechnet, wie gut die Zinssätze sein dürfen, sodass die Bank Gewinn erzielt und gleichzeitig möglichst viele Kunden zufrieden stellen kann.
 Für diesen Stakeholder sind alle Dimensionen wichtig, da nur mit einer sehr guten Datenqualität eine optimale Gesamtbanksteuerung vorgenommen werden kann. 
-Würde der Stakeholder nur über falsche, unvollständige und veraltete Daten verfügen, könnte dies fatale Folgen für die Bank haben.
-Als besonders entscheidend ist für diesen Stakeholder, dass das Risikoscoring richtig und aktuell ist.
-Beim Risikoscoring werden die Daten der Kunden an einen externen Dienstleister gesendet, dieser berechnet einen Score, anhand dessen die Zinsvergabe erfolgt.
+Würde der Stakeholder nur über falsche, unvollständige und veraltete Daten verfügen, könnte dies Verluste für die Bank zur Folge haben.
+Besonders entscheidend ist für diesen Stakeholder, dass der Wert für den Risikoscore richtig und aktuell ist.
+Beim Risikoscoring werden die Daten der Kunden an einen externen Dienstleister gesendet.
+Dieser berechnet einen Risikoscore, anhand dessen die Zinsvergabe erfolgt.
+%CRM sind auch Business User, die korrekte Daten haben wollen
 
 Des weiteren ist der Bankmitarbeiter Bestandteil der Kreditvergabe. 
-Die Kreditvergabe erfolgt anhand einer Bewertung des Kunden, je nachdem wie gut das Scoring des Kunden ist, umso bessere Zinssätze bekommt dieser.
+Die Kreditvergabe erfolgt anhand einer Bewertung des Kunden, je nachdem wie gut der Risikoscore des Kunden ist, umso bessere Zinssätze bekommt dieser.
 Für den Bankmitarbeiter ist es wichtig, dass die Daten zum Risikoscoring sowohl richtig als auch aktuell sind.
 
 Die beschriebenen Stakeholder werden mit ihren Erwartungen an das Projekt in der folgenden Grafik dargestellt.
@@ -54,9 +64,9 @@ Die beschriebenen Stakeholder werden mit ihren Erwartungen an das Projekt in der
 \begin{tabular}[h]{l|p{2cm}|>{\centering}p{1.5cm}|p{2.5cm}|c|c|p{3cm}}
 ID & Wer        & Betroffen-heit & Erwartung & Macht & Einstellung & Maßnahmen  \\ \hline
 S1 & Entwickler & m             & Fehler in der Entwicklung werden angezeigt; Wenig Programmieraufwand & g & Neutral & Erklärung der Notwendigkeit, Zeitvorteil aufzeigen  \\ \hline
-S2 & Business User & h          & Daten sollten fehlerfrei sein & g & Positiv & - \\ \hline
+S2 & Business User & h          & Daten sollten fehlerfrei und aktuell sein & g & Positiv & - \\ \hline
 S3 & Daten-manager & h          & Überprüfung der Qualität muss jederzeit und einfach möglich sein & g & Positiv & - \\ \hline
-S4 & (Bank)-Kunde & h          & Daten müssen immer verfügbar und richtig sein & h & Positiv & - \\
+S4 & Bank-mitarbeiter & h          & Daten müssen immer verfügbar und richtig sein & h & Positiv & - \\
 \end{tabular}
 
 
@@ -64,7 +74,7 @@ Welchen Stakeholder interessiert welche Dimension?
 
 \begin{tabular}[h]{l|l|l}
 Stakeholder & Dimension & Begründung \\ \hline
-Entwickler & Vollständigkeit & (Wurden alle Daten vom Quellsystem abgeholt) \\ \hline
+Entwickler & Vollständigkeit & Der Entwickler geht davon aus, dass die Daten die vom Quellsystem abgeholt werden richtig sind. Für ihn ist deshalb die Dimension Vollständigkeit interessant, da er wissen muss, ob die richtige Anzahl an Daten exportiert wurden. \\ \hline
 Business User & Alle Dimensionen & \\ \hline
 Datenmanager & & \\ \hline
 Kunde & Keine Dimension & Geht davon aus, dass die Datenqualität schon geprüft wurde \\
@@ -101,19 +111,34 @@ Nach \cite{pipino2002} besteht die Schwierigkeit nicht darin die Metriken zu for
 
 
 \section{Machine Learning}
-Mögliche Ansatzweise, die nicht weiterverfolgt wird:
-- Unüberwachtes Lernen findet mögliche Fehlerquellen (Daten, die ungewöhnlich aussehen)
-- Fehlerquellen werden identifiziert
-- Mit neuen Daten (Labels) können Experimente durchgeführt werden 
+Im folgenden Kapitel werden die Verfahren vorgestellt und kurz beschrieben, die für eine Klassifikation benötigt werden. 
+Als Beispiel dient der Risikoscore, da dieser feste Ausgangswerte besitzt und anhand von mehreren Eigenschaften bestimmt wird. 
+Mit Hilfe von Machine Learning können die Risikoscores berechnet werden, ohne den Algorithmus zu kennen, der dahinter steckt. 
+Dies ist interessant für dieses Projekt, da die Risikoscores bisher bei einer Firma eingekauft werden.
+Mit Hilfe eines trainierten Klassifikators können die Daten neu angefordert werden, die sich anhand der Ergebnisse der Klassifikation ändern müssten. 
+\\
+Ein weiterer Ansatz besteht darin mit Hilfe von unüberwachtem Lernen mögliche Fehler in den Daten zu erkennen.
+Anschließend können die als ungewöhnlich markierten Datensätze einem Stakeholder vorgelegt werden.
+Nach dem der Stakeholder die Daten zugeordnet hat, die tatsächlich einem Fehler entsprechen, kann mit diesen Labels ein neuer Klassifikator trainiert werden. 
+Da dieses Verfahren allerdings sehr viel manuellen Aufwand benötigt und bei diesem Vorgehen Filter wesentlich zuverlässiger verwendet werden können, wird dieser Ansatz nicht weiter verfolgt.
+Allerdings ist dies eine gängige Praxis bei Machine-Learning Data Quality tools, wie z. B. talend. 
+
 
 \subsection{Risikoscoring}
-Nachberechnung des Risikoscorings, um zu überprüfen, welche Daten aktualisiert werden sollten.
-Weicht der Wert bei einigen Daten sehr ab, kann die Fachabteilung für diese Daten neue anfordern.
+Der Risikoscore wird in dem vorliegendem Unternehmen durch einen externen Dienstleister berechnet. 
+Der Dienstleister erhält einige Daten über eine Schnittstelle und anschließend werden diese einem Risikoscore zugeordnet und dem Unternehmen zurückgesendet.
+Dieser Risikoscore kann mit Hilfe von Machine Learning Methoden berechnet werden, um zu überprüfen, welche Daten aktualisiert werden sollten.
+Bei den Daten, bei denen der Wert Abweichungen aufweist können neue Daten angefordert werden.
 Dies verbessert die Dimensionen der Richtigkeit und vor allem der Aktualität, die ein Teilgebiet der Richtigkeit darstellt.
+\\ \\
+Die Scores, die der Klassifikator erzeugt können nicht ausschließlich als Basis für Entscheidungen verwendet werden und kann deshalb nur dabei helfen zu entscheiden, welche Daten aktualisiert werden sollten.
+Dies liegt daran, dass Risikoscores nur mit Hilfe von Regressionen berchnet werden dürfen und nicht mit beispielsweise Neuronalen Netzen.
 
-Vollständigkeit
-Da das Risikoscoring eine wichtige Entscheidungsgröße für die Banken ist, ist davon auszugehen, dass dieses Feld nie leer ist.
-Falls das Feld doch leer ist, sollten die Daten neu angefordert werden. 
+
+
+%Vollständigkeit
+%Da das Risikoscoring eine wichtige Entscheidungsgröße für die Banken ist, ist davon auszugehen, dass dieses Feld nie leer ist.
+%Falls das Feld doch leer ist, sollten die Daten neu angefordert werden. 
 
 
 Es müssen feste Gruppen vorhergesagt werden, deshalb bieten sich Klassifikationsalgorithmen an
@@ -187,6 +212,11 @@ Wie groß sind die Auswirkungen der einzelnen Merkmale auf das Gesamtscoring.
 
 \section{Sicherstellung der korrekten Prozesse}
 Ein weiterer wichtiger Aspekt guter Datenqualität besteht darin die Prozesse der Extraktionen so zu gestalten, dass diese fehlerfrei sind.
+Für diesen Anwendungsfall sollte ein Dashboard erstellt werden, das live die Metadaten der Prozesse erhält und anschließend visualisiert.
+Es bieten sich folgende Visualisierungen an.
+Ein Linienchart zur 
+
+
 
 Vollständigkeit auf Datensatzebene
 Vollständigkeit auf Attributwerte (es kommen keine null-values hinzu)
@@ -206,6 +236,12 @@ Die Daten müssen innerhalb einer vorgelegten Range liegen, damit sichergestellt
 
 Zuverlässigkeit, Protokollierung, Dokumentation, Audit der Prozesse
  Verfügbarkeit, Wartbarkeit, Nachvollziehbarkeit
+
+
+Daten zur Beladung (Delta, Vollbestand) in Echtzeit aus dem DWH nach Elastic exportieren
+-> Anhand eines Dashboards ist es möglich festzustellen, ob es Abweichungen gibt
+-> Ein Experte kann diese Abweichungen dann überprüfen
+
 
 
 
