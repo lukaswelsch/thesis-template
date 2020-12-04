@@ -127,12 +127,13 @@ Allerdings ist dies eine gängige Praxis bei Machine-Learning Data Quality tools
 \subsection{Risikoscoring}
 Der Risikoscore wird in dem vorliegendem Unternehmen durch einen externen Dienstleister berechnet. 
 Der Dienstleister erhält einige Daten über eine Schnittstelle und anschließend werden diese einem Risikoscore zugeordnet und dem Unternehmen zurückgesendet.
+%Des weiteren können Bankmitarbeiter den errechneten Score auch überschreiben und somit einen Einfluss auf die Werte nehmen
 Dieser Risikoscore kann mit Hilfe von Machine Learning Methoden berechnet werden, um zu überprüfen, welche Daten aktualisiert werden sollten.
 Bei den Daten, bei denen der Wert Abweichungen aufweist können neue Daten angefordert werden.
 Dies verbessert die Dimensionen der Richtigkeit und vor allem der Aktualität, die ein Teilgebiet der Richtigkeit darstellt.
 \\ \\
 Die Scores, die der Klassifikator erzeugt können nicht ausschließlich als Basis für Entscheidungen verwendet werden und kann deshalb nur dabei helfen zu entscheiden, welche Daten aktualisiert werden sollten.
-Dies liegt daran, dass Risikoscores nur mit Hilfe von Regressionen berchnet werden dürfen und nicht mit beispielsweise Neuronalen Netzen.
+Dies liegt daran, dass Risikoscores nur mit Hilfe von Regressionen berechnet werden dürfen und nicht mit beispielsweise Neuronalen Netzen.
 
 
 
@@ -141,22 +142,22 @@ Dies liegt daran, dass Risikoscores nur mit Hilfe von Regressionen berchnet werd
 %Falls das Feld doch leer ist, sollten die Daten neu angefordert werden. 
 
 
-Es müssen feste Gruppen vorhergesagt werden, deshalb bieten sich Klassifikationsalgorithmen an
-Die Gruppen sind 1A bis 4E. 
+Es müssen feste Gruppen von 1A bis 4E vorhergesagt werden. Deshalb bieten sich Klassifikationsalgorithmen an.
+Nachfolgend werden die in den Experimenten verwendeten Klassifikatoren vorgestellt und darauf eingegangen, welche Parameter zur Verbesserung des Klassifikationsergebnisses diese haben.
 
-KNN \\
+\textbf{KNN} \\
 Das Grundprinzip des K-Nearest-Neighbor Klassifikators besteht darin die Distanzen eines neuen Punktes zu allen anderen Punkten zu berechnen, um anschließend diesem einer Klasse zuzuordnen.
 Für die Zuordnung der Klassen werden die k-nächsten Punkte verwendet.
 Hierbei können verschiedene Distanzmetriken verwendet werden. 
 Diese sind zum Beispiel die euklidische Distanz oder die Manhattan Distanz.
 
 
-Support Vector Machine (SVM) (mit Multiklassenerweiterung) \\
+\textbf{Support Vector Machine (SVM) (mit Multiklassenerweiterung)} \\
 Die Idee der SVM besteht darin eine ideale Trennlinie zwischen zwei Gruppen zu finden. 
 Hierfür werden sogenannte Stützvektoren (Support Vectors) berechnet, indem eine mathematische Gleichung gelöst wird.
-Die Support Vector Machine ist in der Lage Zweiklassen-Probleme zu lösen.
-Da allerdings in dem vorliegenden Datensatz allerdings mehrere Klassen gibt, ist es notwendig eine Multiklassenerweiterung zu verwenden.
-Hierbei wird in der Implementierung von Sklearn One vs One verwendet. 
+Die Support Vector Machine ist in ihrer Grundform nur in der Lage Zweiklassen-Probleme zu lösen.
+Da es in dem vorliegenden Datensatz allerdings mehrere Klassen gibt, ist es notwendig eine Multiklassenerweiterung zu verwenden.
+Dafür wird in der Implementierung von Sklearn One vs One verwendet. 
 Bei diesem Verfahren werden Kombinationen gebildet, bei denen jede Klasse im Vergleich zu einer anderen trainiert wird.
 Um das Ergebnis einer Vorhersage zu erhalten, wird die gewählt, dessen Summe der einzelnen Vorhersagen am Größten ist. 
 \\ 
@@ -164,11 +165,26 @@ Zur Berechnung der benötigten Vergleiche kann folgende Formel verwendet werden:
 (NumClasses * (NumClasses – 1)) / 2
 
 
-- logistische Regression
+\textbf{logistische Regression} %ordinal logistic regression
+Bei diesem Verfahren kann die Wahrscheinlichkeit vorausgesagt werden, welche Ausprägungen von unabhängigen Variablen zu einer abhängigen Variable führen. 
+Dies wird über einen Threshhold gelöst, der angibt bei welcher Wahrscheinlichkeit eine bestimmte Klasse vorhergesagt werden soll oder nicht.
+In unserem Anwendungsfall hat dies den Vorteil, dass bei unstimmigen Datensätze (Wahrscheinlichkeit ist nicht eindeutig) auch neuangefordert werden könnte. 
+Da dieses Verfahren darauf beruht, dass die Datensätze unabhängig voneinander sind, muss zunächst die Abhängigkeit der Variablen berechnet werden.
+Dies kann mit Hilfe des Pearson Korreleations Koeffizienten erledigt werden.
+%Pearson Correlations coefficient -> Testen ob die Daten unabhängig voneinander sind, nur wenn sie das sind funktioniert Logistische Regresseion gut.
 
-- Neuronale Netze
+\textbf{Classifikation Tree}
+Ein Klassifikationsbaum kann dafür verwendet werden, um Regeln zu generieren, die in ein SQL-Skript umgewandelt werden können.
+Dies hätte den Vorteil, dass dieser Klassifikator nur einmal trainiert und verwendet werden müsste.
+Anschließend kann das Ergebnis des Klassifikators in ein Skript überführt werden und zukünftig in die bestehende Infrastruktur mitabgelegt werden, ohne dass ein Mitarbeiter Kenntnisse für Python oder Machine Learning benötigt. 
+Des Weiteren können die gewonnen Informationen verwendet werden, um herauszufinden, welche Eigenschaften besonders wichtig sind.
+Dieses Wissen kann verwendet werden, um die Daten, die einen großen Einfluss auf das Klassifikationsergebnis haben händisch zu überprüfen. 
+So kann die Datenqualität verbessert werden, indem speziell die Eigenschaften der Daten überprüft werden, die tatsächlich für ein gutes Ergebnis benötigt werden.
 
-- Classifikation Tree
+
+%- Neuronale Netze
+
+
 
 Standardisierung
 (Min/Max)-Normierung : Abbilden der Merkmale auf den Wertebereich [0,1]
@@ -186,6 +202,8 @@ Modellbewertung:
 - Precision und Recall
 - Sensitivity und Specifity
 - F-Score
+- confusion matrix
+- auc - roc curve
 
 
 Holdout
@@ -201,11 +219,16 @@ ROC / AUC
 \subsection{Auswirkungen der einzelnen Merkmale auf das Gesamtscoring}
 Es ist wichtig zu wissen, wie sich das Scoring zusammensetzt, um gezielt die Daten zu verbessern, die einen großen Einfluss haben. 
 
-
-
 Wie groß sind die Auswirkungen der einzelnen Merkmale auf das Gesamtscoring. 
 
 \section{Visualisierung}
+Auch mit Hilfe einer Visualisierung können Informationen über die Daten gewonnen werden.
+In diesem Projekt werden die Daten visualisiert, die angeben, wie viele Daten extrahiert wurden.
+Dies geschieht in Echtzeit und werden anschließend in einem Dashboard dargestellt.
+Die Stakeholder können anhand diesem Dashboards sofort erkennen, ob die Datenmenge ungewöhnlich ist im Vergleich zu sonstigen in der Vergangenheit liegenden Datenlieferungen.
+Dies ist ein Indiz für Fehler, die in der Programmierung entstanden sind.
+
+
 
 - Kibana Daten
 - Dashboard für Ampel logik
