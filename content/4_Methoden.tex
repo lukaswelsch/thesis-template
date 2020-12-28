@@ -14,21 +14,24 @@ Die beiden beschriebenen Verfahren werden in dem Kapitel Experimente durchgefüh
 
 
 \section{Stakeholderanalyse}
+Als Stakeholder 
 Mit Hilfe einer Stakeholderanalyse ist es möglich, die negativen Einflüsse zu erkennen und die positiven Einflüsse zu nutzen.
 Zum Anderen können die Erwartungen der einzelnen Stakeholder erkannt und die Projektziele richtig gewichtet werden. \\
 Die Stakeholderanalyse wird nach folgenden Schritten durchgeführt: 
 
 \begin{enumerate}
- \item Identifikation
- \item Information und Analyse 
- \item Aktionsplanung
- \item Monitoring
-\end{enumerate}
+ \item Stakeholder identifizieren
+ \item Stakeholder Einfluss analysieren
+ \item Aktionsplanung (Maßnahmen ableiten)
+\end{enumerate} \cite{salzsearch}
 
 % Nach \cite{pipino2002} gibt es drei Stakeholder: the collector (Sammler) , custodians (Verwalter) and consumers (Verbraucher) of data products.  
 
+\subsection{Stakeholder identifizieren}
+In diesem Schritt werden die Stakeholder genannt, kurz beschrieben und visualisiert. 
 Aufgrund der Analyse des mittelständischen Unternehmens aus der Bankenbranche können folgende Stakeholder identifiziert werden:
 \begin{itemize}
+\itemsep-2em 
 \item Entwickler            % 
 \item Business User         % Verbraucher
 \item Bankmitarbeiter       % Sammler
@@ -39,9 +42,10 @@ Als Stakeholder lassen sich zunächst die Entwickler identifizieren.
 Diese sind für die Einhaltung einer guten Datenqualität unmittelbar wichtig, da diese die Extraktionsprozesse entwickeln, die zu Fehlern in der Datenqualität führen können.
 %Warum kann es überhaupt passieren, dass nicht alle Daten exportiert werden?
 Die Daten werden von einem legacy-System in das Data Warehouse übertragen, indem die Daten aus einer hierarchischen Datenbank als Datei abgelegt werden.
-Ein Prozess iteriert über alle Dateien und extrahiert die Daten, die dann neu strukturiert im Data Warehouse abgelegt werden.
+Ein Prozess iteriert über alle Dateien und extrahiert die Daten, die anschließend neu strukturiert im Data Warehouse abgelegt werden.
 Aufgrund von einigen Problemen in der Extraktion kann es dazu führen, dass die Daten nicht korrekt extrahiert werden.
 Für diesen Fall gibt es eine Überwachung der Programme, die einen Fehler meldet.
+Wenn jedoch weniger oder mehr Daten verarbeitet werden als üblich deutet dies auch auf einen Fehler in der Extraktion hin. 
 %Probleme: Keine Datei wird mehr an einem Ordner abgelegt, weil fehler im anderen System -> keiner merkt was, Daten nicht mehr aktuell
 %Probleme: Zweite Änderung während Extraktion läuft -> Primärschlüssel doppelt -> deduplizierung -> wenn fehler in Primkey, dann werden ganz viele Daten gelöscht, was ungewöhnlich ist
 %Allerdings werden die Dateien teilweise nicht schnell genug abgeholt und die Daten werden überschrieben
@@ -60,12 +64,12 @@ Die Kreditvergabe erfolgt anhand einer Bewertung des Kunden, je nachdem wie gut 
 Für den Bankmitarbeiter ist es wichtig, dass die Daten zum Risikoscoring sowohl richtig als auch aktuell sind.
 
 Die beschriebenen Stakeholder werden mit ihren Erwartungen an das Projekt in der folgenden Grafik dargestellt.
-
+\subsection{Betroffenheitsanalyse}
 \begin{tabular}[h]{l|p{2cm}|>{\centering}p{1.5cm}|p{2.5cm}|c|c|p{3cm}}
 ID & Wer        & Betroffen-heit & Erwartung & Macht & Einstellung & Maßnahmen  \\ \hline
 S1 & Entwickler & m             & Fehler in der Entwicklung werden angezeigt; Wenig Programmieraufwand & g & Neutral & Erklärung der Notwendigkeit, Zeitvorteil aufzeigen  \\ \hline
 S2 & Business User & h          & Daten sollten fehlerfrei und aktuell sein & g & Positiv & - \\ \hline
-S3 & Daten-manager & h          & Überprüfung der Qualität muss jederzeit und einfach möglich sein & g & Positiv & - \\ \hline
+S3 & Product-Owner & h          & Fehler werden frühzeitig erkannt, sodass Kunde nichts merkt & g & Positiv & - \\ \hline
 S4 & Bank-mitarbeiter & h          & Daten müssen immer verfügbar und richtig sein & h & Positiv & - \\
 \end{tabular}
 
@@ -104,8 +108,14 @@ Auch Log-Dateien die Aussagen über den ETL-Prozess liefern, können hilfreich s
 \colorbox{green}{Aufzeigen, warum es wichtig ist auch Visualisierungen zu verwenden, um Datenqualität zu analysieren}
 
 
-\section{Metriken}
-Nach \cite{pipino2002} besteht die Schwierigkeit nicht darin die Metriken zu formulieren, sondern die Datenqualitätsdimension zu definieren, die auf den spezifischen Anwendungsbereich des Unternehmens passt. 
+\section{(Statistsiches Verfahren) ABT / Voranalyse}
+Mit Hilfe einer sogenantnen Analytical Base Table ist es möglich erste Aussagen über die Datenqualität der zu prüfenden Daten zu treffen.
+Zunächst wird diese generiert, um festzustellen, ob die Daten für weitere Untersuchen verwendet werden können.
+Anschließend kann ein Plan entwickelt werden, der darstellt, welche Maßnahmen bei unterschiedlichen Datenqualitätsproblemen getroffen werden kann.
+
+
+
+%Nach \cite{pipino2002} besteht die Schwierigkeit nicht darin die Metriken zu formulieren, sondern die Datenqualitätsdimension zu definieren, die auf den spezifischen Anwendungsbereich des Unternehmens passt. 
 
 %Evtl. kann hier doch noch die Simple Ratio verwendet werden, um die Anzahl der falschen Daten, die das ML errechnet anzuzeigen.%
 
@@ -114,7 +124,7 @@ Nach \cite{pipino2002} besteht die Schwierigkeit nicht darin die Metriken zu for
 Im folgenden Kapitel werden die Verfahren vorgestellt und kurz beschrieben, die für eine Klassifikation benötigt werden. 
 Als Beispiel dient der Risikoscore, da dieser feste Ausgangswerte besitzt und anhand von mehreren Eigenschaften bestimmt wird. 
 Mit Hilfe von Machine Learning können die Risikoscores berechnet werden, ohne den Algorithmus zu kennen, der dahinter steckt. 
-Dies ist interessant für dieses Projekt, da die Risikoscores bisher bei einer Firma eingekauft werden.
+Dies ist interessant für dieses Projekt, da die Risikoscores bisher bei einer Auskunftei eingekauft werden.
 Mit Hilfe eines trainierten Klassifikators können die Daten neu angefordert werden, die sich anhand der Ergebnisse der Klassifikation ändern müssten. 
 \\
 Ein weiterer Ansatz besteht darin mit Hilfe von unüberwachtem Lernen mögliche Fehler in den Daten zu erkennen.
@@ -125,7 +135,7 @@ Allerdings ist dies eine gängige Praxis bei Machine-Learning Data Quality tools
 
 
 \subsection{Risikoscoring}
-Der Risikoscore wird in dem vorliegendem Unternehmen durch einen externen Dienstleister berechnet. 
+Der Risikoscore wird in dem vorliegendem Unternehmen durch einen externen Dienstleister, eine Auskunftei berechnet. 
 Der Dienstleister erhält einige Daten über eine Schnittstelle und anschließend werden diese einem Risikoscore zugeordnet und dem Unternehmen zurückgesendet.
 %Des weiteren können Bankmitarbeiter den errechneten Score auch überschreiben und somit einen Einfluss auf die Werte nehmen
 Dieser Risikoscore kann mit Hilfe von Machine Learning Methoden berechnet werden, um zu überprüfen, welche Daten aktualisiert werden sollten.
@@ -144,6 +154,15 @@ Dies liegt daran, dass Risikoscores nur mit Hilfe von Regressionen berechnet wer
 
 Es müssen feste Gruppen von 1A bis 4E vorhergesagt werden. Deshalb bieten sich Klassifikationsalgorithmen an.
 Nachfolgend werden die in den Experimenten verwendeten Klassifikatoren vorgestellt und darauf eingegangen, welche Parameter zur Verbesserung des Klassifikationsergebnisses diese haben.
+
+
+
+\textbf{Vorgehen} \\
+1. Daten extrahieren
+2. Klassifikator trainieren 
+3. Mit Validierung besten auswählen
+4. alte Daten und trainierten Klassifikator benutzen, um zu testen, ob es Abweichungen gibt
+5. Veraltete Daten anzeigen -> diese sind nun grundlage zum neu bestellen
 
 \textbf{KNN} \\
 Das Grundprinzip des K-Nearest-Neighbor Klassifikators besteht darin die Distanzen eines neuen Punktes zu allen anderen Punkten zu berechnen, um anschließend diesem einer Klasse zuzuordnen.
@@ -186,24 +205,33 @@ So kann die Datenqualität verbessert werden, indem speziell die Eigenschaften d
 
 
 
-Standardisierung
-(Min/Max)-Normierung : Abbilden der Merkmale auf den Wertebereich [0,1]
+\textbf{Standardisierung}
+Mit Hilfe der Min/Max-Normierung können Merkmale auf den Wertebereich [0,1] abgebildet werden. 
+Dadurch werden 
+%(Min/Max)-Normierung : Abbilden der Merkmale auf den Wertebereich [0,1]
 
 
-Für Adressdaten (diese sind Texte mit denen ein ML Verfahren nicht so gut umgehen kann):
--> verwende GPS Daten, die aus PLZ berechnet wurde, damit die Daten einen Zusammenhang haben (Nähe der GPS Koordinaten)
-https://pypi.org/project/pyGeoDb/
+%Für Adressdaten (diese sind Texte mit denen ein ML Verfahren nicht so gut umgehen kann):
+%-> verwende GPS Daten, die aus PLZ berechnet wurde, damit die Daten einen Zusammenhang haben (Nähe der GPS Koordinaten)
+%https://pypi.org/project/pyGeoDb/
 
-Da es einige Features gibt, muss evtl. zuerst eine Dimensionsreduktion vorgenommen werden.
+%Da es einige Features gibt, muss evtl. zuerst eine Dimensionsreduktion vorgenommen werden.
 
 
-Modellbewertung:
+\textbf{Modellbewertung}
+Mit Hilfe von einigen Metriken kann die Güte des Klassifikators bewertet werden.
+Dies hilft dabei die besten Parameter und das am besten für diesen Anwendungsfall geeigneten Klassifikator zu finden.
+Folgende Verfahren werden häufig bei der Bewertung eingesetzt:
 - Accuracy
 - Precision und Recall
 - Sensitivity und Specifity
 - F-Score
 - confusion matrix
-- auc - roc curve
+- auc - roc curve \\
+Da die Confusion Matrix TP, FP, FN und TN angibt ist diese gut geeignet, da sowohl die 
+Allerdings ist die Standard Confusion Matrix nur für ein Zweiklassen Problem geeignet und in diesem konkreten Fall wird mit einem Mehrklassenproblem gearbeitet.
+Deshalb muss die Confusion Matrix erweitert werden auf ein Mehrklassenproblem.
+%https://stats.stackexchange.com/questions/179835/how-to-build-a-confusion-matrix-for-a-multiclass-classifier
 
 
 Holdout
@@ -235,35 +263,53 @@ Dies ist ein Indiz für Fehler, die in der Programmierung entstanden sind.
 
 \section{Sicherstellung der korrekten Prozesse}
 Ein weiterer wichtiger Aspekt guter Datenqualität besteht darin die Prozesse der Extraktionen so zu gestalten, dass diese fehlerfrei sind.
-Für diesen Anwendungsfall sollte ein Dashboard erstellt werden, das live die Metadaten der Prozesse erhält und anschließend visualisiert.
+Für diesen Anwendungsfall wird ein Dashboard erstellt, das live die Metadaten der Prozesse erhält und anschließend visualisiert.
 Es bieten sich folgende Visualisierungen an.
-Ein Linienchart zur 
+Ein Linienchart zur Darstellung des zeitlichen Verlaufs.
+Des weiteren ist es gut die mittlere Abweichung der Anzahl der extrahierten Daten mit darzustellen. 
+Dadurch ist es möglich zu erkennen, ob ungewöhnlich viele bzw. wenige Daten verarbeitet wurden. 
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=150mm,scale=1]{content/Darstellung_vis_pipeline.png}
+\caption{Darstellung des aktuellen Extraktionsverfahrens und Integration der Visualisierung }%
+\end{figure}
+Die Abbildung zeigt den aktuellen Extraktions-Prozess des Data Warehouse. 
+Bei diesem werden Daten aus einigen Quellsystemen abgeholt und in eine zentrale Datenbank, dem Data Warehouse extrahiert.
+Anschließend werden die Daten in das korrekte Format konvertiert und den Endsystemen so bereitgestellt, wie diese die Daten erwarten.
+
+Eine mögliche Visualisierung sollte die Meta-Daten, die von den Quellsystemen extrahiert werden erhalten und anschließend visualisieren.
+Hierfür wird per Trigger die Daten in Echtzeit an Elastic übertragen, dass die Daten anschließend mit Hilfe eines Kibana Dashboards visualisiert.
+Stakeholder sind dann in der Lage grafisch zu sehen, ob es große Abweichungen zu den Monaten / Wochen / Jahren davor gegeben hat und können so einschätzen, ob genauer nachgeforscht werden muss oder ob alles geklappt hat.
+
+%Daten zur Beladung (Delta, Vollbestand) in Echtzeit aus dem DWH nach Elastic exportieren
+%-> Anhand eines Dashboards ist es möglich festzustellen, ob es Abweichungen gibt
+%-> Ein Experte kann diese Abweichungen dann überprüfen
 
 
 
-Vollständigkeit auf Datensatzebene
-Vollständigkeit auf Attributwerte (es kommen keine null-values hinzu)
+%Vollständigkeit auf Datensatzebene
+%Vollständigkeit auf Attributwerte (es kommen keine null-values hinzu)
 
 
-Aktualität die Daten werden schnell genug abgeholt
-Richtigkeit die Daten werden so abgeholt, dass sie fehlerfrei sind
+%Aktualität die Daten werden schnell genug abgeholt
+%Richtigkeit die Daten werden so abgeholt, dass sie fehlerfrei sind
 
-Ideen:
-- Source und Target vergleichen
-- historisch vergleichen, wie viel zu erwarten ist
-- 
+%Ideen:
+%- Source und Target vergleichen
+%- historisch vergleichen, wie viel zu erwarten ist
+%- 
 
-Die Daten müssen innerhalb einer vorgelegten Range liegen, damit sichergestellt wird, dass die Daten in dem Zielsystem richtig ankommen.
-
-
-
-Zuverlässigkeit, Protokollierung, Dokumentation, Audit der Prozesse
- Verfügbarkeit, Wartbarkeit, Nachvollziehbarkeit
+%Die Daten müssen innerhalb einer vorgelegten Range liegen, damit sichergestellt wird, dass die Daten in dem Zielsystem richtig ankommen.
 
 
-Daten zur Beladung (Delta, Vollbestand) in Echtzeit aus dem DWH nach Elastic exportieren
--> Anhand eines Dashboards ist es möglich festzustellen, ob es Abweichungen gibt
--> Ein Experte kann diese Abweichungen dann überprüfen
+
+%Zuverlässigkeit, Protokollierung, Dokumentation, Audit der Prozesse
+% Verfügbarkeit, Wartbarkeit, Nachvollziehbarkeit
+
+
+
 
 
 

@@ -1,49 +1,78 @@
 \chapter{Daten}\label{ch:data}
-
 Die in der Arbeit verwendeten Daten stammen aus dem Data Warehouse einer deutschen Bank.
-Aufgrund des Datenschutzes wurden personenbezogene Daten pseudonymisiert und anonymisiert.
-
-Ein- und Ausschlusskriterien für die Daten:
-
+Zunächst wird mit den Entwicklungsdaten gearbeitet, da diese im wesentlichen den produktiven Daten entsprechen.
+In den Entwicklungsdaten wurden personenbezogene Daten, aufgrund des Datenschutzes, bereits pseudonymisiert und anonymisiert.
 
 
-grobe Anzahl des Datenbestandes (evtl. auf dem produktiv System) berechnen
+Ein- und Ausschlusskriterien für die Daten:\\
+In diesem Projekt werden zwei verschiedene Datensätze verwendet. 
+Zum einen wird ein Datensatz benötigt, der für die Visualisierung verwendet werden kann. 
+Dieser Datensatz benötigt Eigenschaften, die sich so visualisieren lassen, dass anhand der Visualisierung neue Erkenntnisse abgeleitet werden können.
+Am besten bieten sich Daten an, die nur wenige Dimensionen haben, da sich niedrig dimensionale Daten besser in einer Grafik darstellen lassen. 
+\\
+Des weiteren werden Daten benötigt, die für Machine Learning geeignet sind. 
+Hierfür werden Daten benutzt, die feste Labels zu bestimmten Input Parametern besitzt.
+Ein Klassifikator kann anhand der Eigenschaften einer Ausprägung und dem dazugehörigem Label lernen, welche Eigenschaften zu welchem Label führen und so eine Klassifikation durchführen. 
 
 
-Risikoscoring (Werte von 1A bis 4E)
-Trainigslabel = Scoring
+Für die Visualisierung können Metadaten zu den Prozessen verwendet werden.
+Diese beinhalten die Anzahl der verarbeiteten Datensätze pro Zeiteinheit.
+\\
+
+Nach einer Recherche und Analyse der vorhandenen Daten bieten sich die Daten zum Risikoscoring am besten an.
+Diese Daten sind in einer Vielzahl vorhanden und erfüllen die gewünschten Anforderung an Machine Learning. 
+Die Daten sind nachfolgend genauer beschrieben: \\
+Das Label ist der Risikowert eines Geschäfts, wobei ein Geschäft in diesem Fall ein Darlehen ist.
+Dieser Risikowert hat einen Wertebereich von 0E bis 4E.
+Die Inputdaten bestehen aus den folgenden Eigenschaften, die zum Training des Klassifikators verwendet werden können. 
 
 
  Name (Vorname), Alter, Geschlecht, Familienstand, Anzahl der Kinder,
 Alter der Kinder, Meldeadresse(n), Wohndauer, Haushaltstyp, Bildungsstand, Beruf, Arbeitgeber, Beschäftigungsdauer, monatliches Nettoeinkommen, monatliche Ausgaben (Haushaltsrechnung), Kfz-Besitz, Eintragungen in Schuldnerverzeichnissen und Warnlisten, Insolvenz, gebotene Sicherheiten (z. B. Immobilien, Bürgen), Kontoführung und Überziehungen, Dauer der Kundenbeziehung, auffällige Einzeltransaktionen, vorherige interne
 Kredite und Erfahrungen hieraus, sowie Art und Anzahl der Kredite. 
 
+Die Daten werden mit Hilfe eines ETL-Prozesses aus dem DataWarehouse extrahiert. 
+Dieses Programm wurde im Rahmen der vorliegenden Arbeit entwickelt und ist in einer Versionsverwaltung abgelegt. 
+Zunächst werden die benötigten Daten aus unterschiedlichen Quelltabellen geladen, hierzu zählen z.B. personenbezogene Daten oder auch die tatsächlichen Risikoscorings. 
+Anschließend werden die Daten bereinigt und mit Hilfe einer Aggregatfunktion die Kredite, Saldo summiert und die Anzahl in einer zusätzlichen Spalte gespeichert.
+
+% Ein Beispiel für Daten, die aggregiert werden 
 
 
-Alter
-Arbeitgeber
-ausgeübter Beruf
-Beschäftigungsdauer im ausgeübten Beruf
+
+partner->alles
+
+primkey weg
+
+NEU: Rückstand Kreditzahlung, aktuelle Schulden, Daten aus öffentlichem Schuldnerverzeichnissen
+
+Bisher:
+-Alter
+-ausgeübter Beruf
 Bürge vorhanden
 Einkommensklasse
-Einkommen, verfügbares
-Familienstand
-Geschlecht
+Einkommen, verfügbares -> in Tabelle S-PARTNER-WIRTSCHAFTSDATEN -> Leider größtenteils leer?, steuerbetrag auch leer
+-Familienstand -> lu-9029familienstand-sid
+-Geschlecht -> lu
+-Kinderanzahl
+Kredite in Stück (eigene) -> Bei externen Firmen (Bloß 70 angegeben) + Daten aus öffentlichem Schuldnerverzeichnissen
+Nettokreditbetrag -> aktuelle Schulden
+-Nationalität
+-Schufa
+
+Wohndauer -> historie
+Beschäftigungsdauer im ausgeübten Beruf
+Arbeitgeber
 Haftende
 Haushaltstyp
 Kfz-Besitz
-Kinderanzahl
-Kredite in Stück (eigene)
-Nettokreditbetrag
-Nationalität
-Schufa
-Wohndauer
 nach 
-\cite{sokol2005}
+\cite{sokol2005}++
+
+Kredite bei Fremdbank -> 
 
 
-Im vorliegenden Projekt wird zunächst mit den Entwicklungsdaten gearbeitet, da diese im wesentlichen den produktiven Daten entsprechen.
-Der Vorteil an Entwicklungsdaten liegt darin, dass mit diesen Daten Experimente durchgeführt werden können, ohne den Datenschutz zu missachten, da diese schon pseudonymisiert und anonymisiert worden sind. 
+
 
 Zunächst sollte sich eine Übersicht über die Daten beschafft werden:
 
@@ -66,4 +95,3 @@ Zur Visualisierung werden die Daten aus den Prozessen verwendet.
 
 Visualisierung auf zwei Arten: Major critical (Sonar)
 1. Visualisierung der Metriken (Ergebnisse)
-2. Visualisuerng der Daten selbst, zb Nul Values gelb markiert
