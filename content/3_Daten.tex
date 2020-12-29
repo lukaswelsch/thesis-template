@@ -27,9 +27,9 @@ Dieser Risikowert hat einen Wertebereich von 0E bis 4E.
 Die Inputdaten bestehen aus den folgenden Eigenschaften, die zum Training des Klassifikators verwendet werden können. 
 
 
- Name (Vorname), Alter, Geschlecht, Familienstand, Anzahl der Kinder,
-Alter der Kinder, Meldeadresse(n), Wohndauer, Haushaltstyp, Bildungsstand, Beruf, Arbeitgeber, Beschäftigungsdauer, monatliches Nettoeinkommen, monatliche Ausgaben (Haushaltsrechnung), Kfz-Besitz, Eintragungen in Schuldnerverzeichnissen und Warnlisten, Insolvenz, gebotene Sicherheiten (z. B. Immobilien, Bürgen), Kontoführung und Überziehungen, Dauer der Kundenbeziehung, auffällige Einzeltransaktionen, vorherige interne
-Kredite und Erfahrungen hieraus, sowie Art und Anzahl der Kredite. 
+% Name (Vorname), Alter, Geschlecht, Familienstand, Anzahl der Kinder,
+%Alter der Kinder, Meldeadresse(n), Wohndauer, Haushaltstyp, Bildungsstand, Beruf, Arbeitgeber, Beschäftigungsdauer, monatliches Nettoeinkommen, monatliche Ausgaben (Haushaltsrechnung), Kfz-Besitz, Eintragungen in Schuldnerverzeichnissen und Warnlisten, Insolvenz, gebotene Sicherheiten (z. B. Immobilien, Bürgen), Kontoführung und Überziehungen, Dauer der Kundenbeziehung, auffällige Einzeltransaktionen, vorherige interne
+%Kredite und Erfahrungen hieraus, sowie Art und Anzahl der Kredite. 
 
 Die Daten werden mit Hilfe eines ETL-Prozesses aus dem DataWarehouse extrahiert. 
 Dieses Programm wurde im Rahmen der vorliegenden Arbeit entwickelt und ist in einer Versionsverwaltung abgelegt. 
@@ -38,38 +38,29 @@ Anschließend werden die Daten bereinigt und mit Hilfe einer Aggregatfunktion di
 
 % Ein Beispiel für Daten, die aggregiert werden 
 
+Nach \cite{sokol2005} verwenden Auskunfteien bestimmte Daten als Grundlage des Risikoscores. 
+Darunter werden Kfz-Besitz, Wohndauer, verfügbares Einkommen, Berufsdaten und Haftende nicht im Data Warehouse gespeichert. 
+Somit ergibt sich folgende Liste relevanter Daten für die ML-Experimente. 
+
+\begin{itemize}
+ \item Alter (Geburtsdatum)
+ \item ausgeübter Beruf
+ \item Bürge vorhanden
+ \item Familienstand
+ \item Geschlecht
+ \item Kinderanzahl
+ \item Kredite in Stück 
+ \item Nettokreditbetrag 
+ \item Nationalität
+ \item Schufa
+ \item Haushaltstyp
+\end{itemize}
 
 
-partner->alles
+Im Rahmen der Recherche zu Daten, die sich zur Berechnung des Risikoscores anbieten konnten weitere Daten als nützlich identifiziert werden. 
+Diese sind der aktuelle Rückstand der Kreditzahlung und Daten aus öffentlichem Schuldnerverzeichnissen.
 
-primkey weg
-
-NEU: Rückstand Kreditzahlung, aktuelle Schulden, Daten aus öffentlichem Schuldnerverzeichnissen
-
-Bisher:
--Alter
--ausgeübter Beruf
-Bürge vorhanden
-Einkommensklasse
-Einkommen, verfügbares -> in Tabelle S-PARTNER-WIRTSCHAFTSDATEN -> Leider größtenteils leer?, steuerbetrag auch leer
--Familienstand -> lu-9029familienstand-sid
--Geschlecht -> lu
--Kinderanzahl
-Kredite in Stück (eigene) -> Bei externen Firmen (Bloß 70 angegeben) + Daten aus öffentlichem Schuldnerverzeichnissen
-Nettokreditbetrag -> aktuelle Schulden
--Nationalität
--Schufa
-
-Wohndauer -> historie
-Beschäftigungsdauer im ausgeübten Beruf
-Arbeitgeber
-Haftende
-Haushaltstyp
-Kfz-Besitz
-nach 
-\cite{sokol2005}++
-
-Kredite bei Fremdbank -> 
+% Wertebereich der Daten, Anzahl der Daten
 
 
 
@@ -79,9 +70,10 @@ Zunächst sollte sich eine Übersicht über die Daten beschafft werden:
 
 \begin{lstlisting}[language=SQL,caption={Überblick über die Daten},captionpos=b]
 SELECT VALIDDT, COUNT(VALIDDT) 
-FROM SCHEMA.STAMMDATEN 
+FROM SCHEMA.bachelordaten 
 GROUP BY VALID_DT 
 ORDER BY VALID_DT
+LIMIT 5
 \end{lstlisting}
 Anhand dieser Abfrage lassen sich die Anzahl der Daten zu den jeweiligen Tagen bestimmen. 
 Beispielhaft wird mit einem aktuellen VALIDDT gearbeitet. 
@@ -93,5 +85,4 @@ Daten für die Visualisierung:
 Zur Visualisierung werden die Daten aus den Prozessen verwendet. 
 
 
-Visualisierung auf zwei Arten: Major critical (Sonar)
-1. Visualisierung der Metriken (Ergebnisse)
+
