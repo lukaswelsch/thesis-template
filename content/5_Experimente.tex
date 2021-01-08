@@ -1,86 +1,160 @@
 \chapter{Experimente}\label{ch:experiments}
 %Auf Validität und Reliabilität achten!
+Die ML-Experimente bestehen darin die Methoden praktisch umzusetzen und die Ergebnisse zu interpretieren. 
+Ziel der Experimente ist einen Klassifikator zu trainieren, der den Risikoscore zuverlässig vorhersagen kann. 
+Mit dessen Hilfe ist es anschließend möglich die Aktualität bzw. Richtigkeit des Scores zu überprüfen und zu aktualisieren.
+Dies spart Geld, da nun nur noch die Daten aktualisiert werden müssen, bei denen der Klassifikator eine Abweichung feststellt. 
+Auch für neue Kunden kann dieses Verfahren verwendet werden, um schnell ein Ergebnis zu erhalten, da nicht erst auf das Ergebnis der externen Ratingfirma gewartet werden muss.
+Allerdings sollten die Daten immer aktualisiert werden und nicht nur auf den Klassifikator vertraut werden. 
+Um die Datenmenge zu reduzieren, werden zunächst nur die Daten von einem bestimmten Tag geladen und analysiert.
+Da die Klassifikatoren keine guten Ergebnisse aufweisen, wird als Lösung ein Upsampling der Daten vorgeschlagen, das die Lücken der Labels aus älteren Daten füllt.
 
 
-- Aufbau des ETL-Prozesses - 
+\section{ML-Experimente / Modell Evaluation }
 
-            ML     ML
--> BASE -> SRC -> BIZ
-
-\section{ML-Experimente (evtl in genaues Verfahren umbennen)}
-Scoringverfahren:
-
-Vollständigkeit
-- Fehlen Scoring ergebnisse können diese nachberechnet werden
-
-Akutalität
-- Sind die Scoring werte veraltet so können diese neu berechnet werden
+\subsection{Versuchsaufbau}
+Die Experimente werden auf einem Windows-Rechner in einem Jupyter-Notebook durchgeführt. 
+%Vorteile von Jupyter Notebook
+Als Python-Bibliotheken kommen pandas, numpy und sklearn zum Einsatz. 
+\\
+Vorgehensweise: \\
 
 
-Richtigkeit
-- Überprüfung der Richtigkeit schwierig, da mit Daten gearbeitet wird, die evtl. selbst nicht richtig sind. 
+Zunächst werden die Daten mit Hilfe eines Python-Connectors von der Datenbank in das Jupyter Notebook geladen, die wie im Kapitel 3 beschrieben, durch ein Skript erzeugt werden.
+%Code Exzerpt: 
+Hierfür werden die Daten zunächst in ein Python-Dictionary geladen und anschließend in eine Python-Tabelle (DataFrame) gespeichert. 
+% was ist ein Python-Dictionary und ein DataFrame 
 
-Was sind Daten die Einfluss auf das Kundenrating haben?
--> Für welche Daten wäre es besonders wichtig die Datenqualität händisch zu überprüfen
+\subsection{Datenaufbereitung }
+Zunächst werden die Daten genauer untersucht um festzustellen ob die Daten bereinigt werden müssen oder ob sich die Klassenverteilung zu sehr unterscheidet. 
+Zunächst zeigt eine Grafik die Verteilung der einzelnen Klassen. 
+In der Abbildung ist zu erkennen, dass die Klassen sehr ungleichmäßig
+verteilt sind.
+
+Klasse 0E ist deutlich häufiger vertreten als manche andere Klassen. 
+Dies führt für einige Verfahren zu Problemen und sollte mit Hilfe von Under/Oversampling behoben werden.
+
+Außerdem sind in dem vorliegen Datensatz einige textuelle Attribute, diese können durch einen OneHot Encoder so aufbereitet werden, dass diese in einem Klassifikator verwendet werden können.
+Da nach einem OneHot Encoding sehr viele Nullen in dem Datenset entstehen bietet sich zur weiteren Verarbeitung eine Sparse-Matrix an.
+Diese speichert nur die tatsächlich vorhandenen Daten und speichert keine Null-Werte. %Quelle
+
+Da manche Daten sehr von anderen abweichen (Varianz sehr groß) müssen die Daten skaliert werden.
+Zum Beispiel kann der Saldo einen Wertebereich von [-100.000;100.000] haben.
+Die Standardabweichung ist sehr groß, da die Daten einen großen Wertebereich haben.
+Aus der Formel zur Berechnung der Standardabweichung ergibt sich somit folgende Tabelle:
+
+      | Werte bereich,      | Standardabweichung
+SALDO | -100.000, 100.000   | 100.000
+
+%Varianz ausrechnen und als Tabellenausschnitt anzeigen
+
+Des weiteren können Daten entfernt werden, die nur einen einzigen Wert haben, da diese keinen Klassifikator trainieren können.
+Deshalb wird ein Upsampling durchgeführt, damit keine Daten gelöscht werden müssen, sondern immer genügend Datenwerte vorhanden sind.
+
+\subsection{Erzeugen der ABT und Erstellen eines Data Quality Reports}
+
+\subsection{Verfahren}
+Die Verfahren beruhen auf den in Kapitel 4 ausgewählten Verfahren.
+Jedes Verfahren wird mit Upsampling brauchbar gemacht.
+Warum? (grob: was ist upsampling / oder Kapitel 4 verweisen)
+Wie wird das Upsampling gemacht?
+
+KNN
+- trainieren
+- Modell Bewerten 
+    - train dev test
+    - f1-score, accuracy und precision
+    - stratified k-fold cross validation
+    - f1-score, accuracy und precision 
+
+    
+SVM
+- trainieren
+- Modell Bewerten 
+    - train dev test
+    - f1-score, accuracy und precision
+    - stratified k-fold cross validation
+    - f1-score, accuracy und precision 
+
+Random Forest
+- trainieren
+- Modell Bewerten 
+    - train dev test
+    - f1-score, accuracy und precision
+    - stratified k-fold cross validation
+    - f1-score, accuracy und precision 
 
 
-ML-Verfahren, immer inklusive Performance-Grafik:
-- logistische Regression
-
-
-Ziele:
-- Vorhersagen des Risikoscorings anhand der Inputdaten
-
-Aufbau:
-- python als Programmiersprache
-- Aufteilen in train-dev-test
-- 
-
-
-\subsection{KNN}
-
-Variabilität (Einfluss der Parameter auf das Ergebnis):
-- verschiedene k-Werte 
-- Manhattan vs. Euklidische Distanz
-
-
-\subsection{SVM (Multiklassen)}
-
-Verschiedene Parameter:
-- unterschiedl. Kernelfunktionen
-- C-Parameter, der über Slackvariablen gesteuert wird
-- 
-
-- Neuronale Netze
-
-- Classifikation Tree
+Zusammenfassung: Welcher hat das beste Klassifikationsergebnis?
+In diesem Kapitel wurden die Verfahren KNN, SVM, blabla getestet und der beste Klassifikator ist blabla.
 
 
 
 
--
-
-Aufbau Experimente: 
-Ziele*ʹ Aufbau*ʹ Ergebnisse*' Interpretation*ʹ Threats*to*Validity
-(Seite 93 https://userpages.uni-koblenz.de/~laemmel/esecourse/slides/perf.pdf)
 
 
-Ideen:
-- Komplexe Funktionen mit Stakeholdern basteln, zb wenn verheiratet dann Alter > 18
-- Daten für zb Aktualität müssen definiert werden, ob sie beispielsweise überhaupt verfallen können. Zb Geburtsdatum ändert sich nie; Alter schon
-- Ist es möglich solche Regeln mit HIlfe von ML abzuleiten oder funktioniert das gar nicht? 
-- Daten vor einem Monat berechnen, wie viele sich ändern müssten (aufgrund von zb Timeliness, correctness) und dann nachschauen wie viele sich tatsächlich geändert haben
-- Big Data Quality A Quality Dimension evaluation hat zwei konkrete Experimente, dort kann man sich gute Ideen holen. Es wird auch ein Experte zu Rate gezogen, der beispielsweise angibt, welche Daten gelöscht werden können (zb wenn 80\% der Attribute fehlen). Es hat auch einige Visualisierungen 
-- Mit SQL: 
-https://dataform.co/blog/advanced-data-quality-testing
+%Scoringverfahren:
 
 
 
+%Was sind Daten die Einfluss auf das Kundenrating haben?
+%-> Für welche Daten wäre es besonders wichtig die Datenqualität händisch zu überprüfen
 
-Auf die verschiedenen Ebenen Aktualität, Richtigkeit, Vollständigkeit und Konsistenz eingehen!
-Oft ist es besser die Daten nachzufordern, anhand eines möglichen Fehlers kann nicht der Originalzustand wiederhergestellt werden
 
-\section{Visualisierung}
+%ML-Verfahren, immer inklusive Performance-Grafik:
+%- logistische Regression
+
+
+%Ziele:
+%- Vorhersagen des Risikoscorings anhand der Inputdaten
+
+%Aufbau:
+%- python als Programmiersprache
+%- Aufteilen in train-dev-test
+%- 
+
+
+%\subsection{KNN}
+
+%Variabilität (Einfluss der Parameter auf das Ergebnis):
+%- verschiedene k-Werte 
+%- Manhattan vs. Euklidische Distanz
+
+
+%\subsection{SVM (Multiklassen)}
+
+%Verschiedene Parameter:
+%- unterschiedl. Kernelfunktionen
+%- C-Parameter, der über Slackvariablen gesteuert wird
+%- 
+
+%- Neuronale Netze
+
+%- Classifikation Tree
+
+
+
+%Aufbau Experimente: 
+%Ziele*ʹ Aufbau*ʹ Ergebnisse*' Interpretation*ʹ Threats*to*Validity
+%(Seite 93 https://userpages.uni-koblenz.de/~laemmel/esecourse/slides/perf.pdf)
+
+
+%Ideen:
+%- Komplexe Funktionen mit Stakeholdern basteln, zb wenn verheiratet dann Alter > 18
+%- Daten für zb Aktualität müssen definiert werden, ob sie beispielsweise überhaupt verfallen können. Zb Geburtsdatum ändert sich nie; Alter schon
+%- Ist es möglich solche Regeln mit HIlfe von ML abzuleiten oder funktioniert das gar nicht? 
+%- Daten vor einem Monat berechnen, wie viele sich ändern müssten (aufgrund von zb Timeliness, correctness) und dann nachschauen wie viele sich tatsächlich geändert haben
+%- Big Data Quality A Quality Dimension evaluation hat zwei konkrete Experimente, dort kann man sich gute Ideen holen. Es wird auch ein Experte zu Rate gezogen, der beispielsweise angibt, welche Daten gelöscht werden können (zb wenn 80\% der Attribute fehlen). Es hat auch einige Visualisierungen 
+%- Mit SQL: 
+%https://dataform.co/blog/advanced-data-quality-testing
+
+
+
+
+%Auf die verschiedenen Ebenen Aktualität, Richtigkeit, Vollständigkeit und Konsistenz eingehen!
+%Oft ist es besser die Daten nachzufordern, anhand eines möglichen Fehlers kann nicht der Originalzustand wiederhergestellt werden
+
+%\section{Visualisierung}
 
 %https://www.elastic.co/guide/en/kibana/6.8/createvis.html
 

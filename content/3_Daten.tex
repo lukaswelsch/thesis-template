@@ -33,7 +33,9 @@ Die Inputdaten bestehen aus den folgenden Eigenschaften, die zum Training des Kl
 
 Die Daten werden mit Hilfe eines ETL-Prozesses aus dem DataWarehouse extrahiert. 
 Dieses Programm wurde im Rahmen der vorliegenden Arbeit entwickelt und ist in einer Versionsverwaltung abgelegt. 
-Zunächst werden die benötigten Daten aus unterschiedlichen Quelltabellen geladen, hierzu zählen z.B. personenbezogene Daten oder auch die tatsächlichen Risikoscorings. 
+%Programmiersprache, ETL Programm
+Zunächst werden die benötigten Daten aus unterschiedlichen Quelltabellen %Namen der Tabellen
+geladen, hierzu zählen z.B. personenbezogene Daten oder auch die tatsächlichen Risikoscorings. 
 Anschließend werden die Daten bereinigt und mit Hilfe einer Aggregatfunktion die Kredite, Saldo summiert und die Anzahl in einer zusätzlichen Spalte gespeichert.
 
 % Ein Beispiel für Daten, die aggregiert werden 
@@ -57,27 +59,14 @@ Somit ergibt sich folgende Liste relevanter Daten für die ML-Experimente.
 \end{itemize}
 
 
-Im Rahmen der Recherche zu Daten, die sich zur Berechnung des Risikoscores anbieten konnten weitere Daten als nützlich identifiziert werden. 
-Diese sind der aktuelle Rückstand der Kreditzahlung und Daten aus öffentlichem Schuldnerverzeichnissen.
+Im Rahmen der Recherche zu Daten, die sich zur Berechnung des Risikoscores anbieten konnten weitere Daten identifiziert werden, die einen Mehrwert zur Klassifikation bringen könnten. 
+Diese sind der aktuelle Rückstand der Kreditzahlung und Daten aus öffentlichen Schuldnerverzeichnissen.
 
 % Wertebereich der Daten, Anzahl der Daten
 
 
 
 
-Zunächst sollte sich eine Übersicht über die Daten beschafft werden:
-
-
-\begin{lstlisting}[language=SQL,caption={Überblick über die Daten},captionpos=b]
-SELECT VALIDDT, COUNT(VALIDDT) 
-FROM SCHEMA.bachelordaten 
-GROUP BY VALID_DT 
-ORDER BY VALID_DT
-LIMIT 5
-\end{lstlisting}
-Anhand dieser Abfrage lassen sich die Anzahl der Daten zu den jeweiligen Tagen bestimmen. 
-Beispielhaft wird mit einem aktuellen VALIDDT gearbeitet. 
-Folgende Spalten sind in der Tabelle vorhanden:
 
 
 
