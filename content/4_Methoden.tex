@@ -107,6 +107,20 @@ Dadurch kann die Dimension der Vollständigkeit verbessert werden.
 Auch Log-Dateien die Aussagen über den ETL-Prozess liefern, können hilfreich sein und sollten ausgewertet werden.
 \colorbox{green}{Aufzeigen, warum es wichtig ist auch Visualisierungen zu verwenden, um Datenqualität zu analysieren}
 
+\subsection{Anforderungen an den Klassifikator}
+Damit der trainierte Klassifikator verwendet werden kann, um weniger Risikoswerte bei dem externen Ratingfirma abzufragen, muss der Klassifikator einige Anforderungen erfüllen.
+Diese können als Fragen gestellt werden, die anschließend mit Hilfe der ML-Experimente beantwortet werden können. 
+Diese Fragen umfassen auch die zuvor aufgestellten Thesen, zur Verwendung von bestimmten Datensätzen als zusätzliche Verbesserung der Klassifikation. 
+
+\begin{itemize}
+ \item Welchen Einfluss haben die zusätzlich ausgewählten Eigenschaften auf die Güte?
+ \item Wie hoch ist insbesondere die Precision des Klassifikators?
+ \item Welcher Klassifikator ist am besten geeignet und erzielt den höchsten Precisionwert?
+ \item Können auch ohne die Daten vom externen Anbieter Schufa gute Ergebnisse erzielt werden?
+ \item Was eignet sich besser vorherzusagen der Schufascore oder Ratingwert?
+\end{itemize}
+
+
 
 \section{(Statistsiches Verfahren) ABT / Voranalyse}
 Mit Hilfe einer sogenantnen Analytical Base Table ist es möglich erste Aussagen über die Datenqualität der zu prüfenden Daten zu treffen.
@@ -155,6 +169,7 @@ Dies liegt daran, dass Risikoscores nur mit Hilfe von Regressionen berechnet wer
 Es müssen feste Gruppen von 1A bis 4E vorhergesagt werden. Deshalb bieten sich Klassifikationsalgorithmen an.
 Nachfolgend werden die in den Experimenten verwendeten Klassifikatoren vorgestellt und darauf eingegangen, welche Parameter zur Verbesserung des Klassifikationsergebnisses diese haben.
 
+Des weiteren könnte der Klassifikator auch zur Berechnung des Schufascores herangezogen werden. 
 
 
 \textbf{Vorgehen} \\
@@ -234,8 +249,25 @@ Folgende Verfahren werden häufig bei der Bewertung eingesetzt:
 Da die Confusion Matrix TP, FP, FN und TN angibt ist diese gut geeignet, da sowohl die 
 Allerdings ist die Standard Confusion Matrix nur für ein Zweiklassen Problem geeignet und in diesem konkreten Fall wird mit einem Mehrklassenproblem gearbeitet.
 Deshalb muss die Confusion Matrix erweitert werden auf ein Mehrklassenproblem.
+Diese Multiklassenerweiterung ist in dem verwendeten Framework sklearn implementiert und kann ohne weitere Einstellungen verwendet werden.
 %https://stats.stackexchange.com/questions/179835/how-to-build-a-confusion-matrix-for-a-multiclass-classifier
 
+\textbf{Under- bzw. Oversampling}
+Des weiteren werden in den Experimenten mit den Techniken des Under- bzw. Oversamplings gearbeitet. 
+Diese Verfahren sind in der Lage unbalancierte Datensätze, wie den vorliegende Datensatz, für die Modelle vorzubereiten. 
+Dies geschieht beim Undersampling, indem die Daten so reduziert werden, dass die Daten, die in einer hohen Klassendichte vorhanden sind, in etwa gleich mit den anderen Klassen sind. 
+Beim Oversampling auf der anderen Seite werden die Daten, die in einer Unterzahl sind durch mehrmaliges einfügen auf die Menge der anderen Klassen gebracht. 
+Dies führt dazu, dass in den Daten, Datensätze redundant vorhanden sind. 
+\cite{ML 3.6.3 Sampling}
+Der Nachteil des Oversamplings besteht darin, dass die Modelle overfitten, da mehr Datensätze die gleiche Klasse repräsentieren, sie werden also tendenziell bevorzugt. 
+\cite{ML 4.4.4 Tree Pruning}
+Oversampling wird verwendet, wenn zu wenig Datensätze vorhanden sind und Undersampling, falls genügend viele Daten verfügbar sind. 
+
+\textbf{Modell Anpassung}
+Als Alternative zum Sampling können die Modelle stärker bestraft werden, wenn diese falsch klassifizieren. 
+
+% "Adjusting Class Votes" für Sigmoid und Majority Vote
+% Nachfolgender Link zeigt die Verwendung von Class-weights in SVM https://machinelearningmastery.com/cost-sensitive-svm-for-imbalanced-classification/
 
 Holdout
 k-Fold

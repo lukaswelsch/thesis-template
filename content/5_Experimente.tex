@@ -35,6 +35,9 @@ Klasse 0E ist deutlich häufiger vertreten als manche andere Klassen.
 Dies führt für einige Verfahren zu Problemen und sollte mit Hilfe von Under/Oversampling behoben werden.
 
 Außerdem sind in dem vorliegen Datensatz einige textuelle Attribute, diese können durch einen OneHot Encoder so aufbereitet werden, dass diese in einem Klassifikator verwendet werden können.
+Das Feld 'BERUF' besteht aus Berufen, die von den Bankmitarbeitern eingetragen werden, da es nun Berufe gibt, die nicht Genderneutral sind, wird mit Hilfe eines Stemmings die Daten auf eine gemeinsame Grundform überführt.
+
+
 Da nach einem OneHot Encoding sehr viele Nullen in dem Datenset entstehen bietet sich zur weiteren Verarbeitung eine Sparse-Matrix an.
 Diese speichert nur die tatsächlich vorhandenen Daten und speichert keine Null-Werte. %Quelle
 
@@ -49,18 +52,43 @@ SALDO | -100.000, 100.000   | 100.000
 %Varianz ausrechnen und als Tabellenausschnitt anzeigen
 
 Des weiteren können Daten entfernt werden, die nur einen einzigen Wert haben, da diese keinen Klassifikator trainieren können.
-Deshalb wird ein Upsampling durchgeführt, damit keine Daten gelöscht werden müssen, sondern immer genügend Datenwerte vorhanden sind.
+
 
 \subsection{Erzeugen der ABT und Erstellen eines Data Quality Reports}
 
 \subsection{Verfahren}
-Die Verfahren beruhen auf den in Kapitel 4 ausgewählten Verfahren.
-Jedes Verfahren wird mit Upsampling brauchbar gemacht.
-Warum? (grob: was ist upsampling / oder Kapitel 4 verweisen)
-Wie wird das Upsampling gemacht?
+Die verwendeten Verfahren beruhen auf den in Kapitel 4 ausgewählten Methoden.
+Anhand der nachfolgenden Experimente und der genauen Analyse der Daten ist zu Erkennen, dass die Klassenverteilung sehr unausgeglichen ist. 
+Dies hat zur Folge, dass die gewählten Modelle zum einen nicht richtig trainiert und zum anderen nicht korrekt validiert werden können. 
+Es ist deshalb wichtig die korrekten Verfahren zur Modellbewertung zu beachten.
+Das heißt konkret, dass außer dem Accuracy-Score auch die andern Metriken betrachtet werden müssen, wie z.B. Precision und Recall.
+
+
+\textbf{Warum Undersampling?}
+% Eine Baseline stellt ein einfaches Modell dar, das versucht wird zu verbessern. 
+Als Beispiel zum Problem der ungleichen Klassenverteilung soll folgendes Szenario zeigen: \\
+Die Klassenverteilung der Daten zeigt, dass die Klasse '0E' einen Anteil von knapp 58\% besitzen. 
+Ein einfacher Klassifikator, der immer diese Klasse rät, würde somit eine Accurracy von 58\% erreichen. \textbf{HIER NOCH DIE FORMEL EINFÜGEN}
+Da Undersampling generell zu weniger Over-Fitting führt als oversampling wird zunächst versucht dieses Verfahren zu verwenden. \cite{fundamentals of ml}
+In der Liste der Klassen ist die Klasse '4A' nicht so häufig vertreten, weshalb eine Kombination der beiden Verfahren nachfolgend getestet wird. 
+Das Undersampling sollte jedoch nur auf den Trainigsdaten erfolgen und nicht bevor die Daten in Trainings- und Testset extrahiert werden, da sonst die Gefahr besteht, dass das Modell nicht korrekt in der realen Verwendung funktioniert. 
+
+% WIRD JETZT ANDERS GEMACHT Da die Daten nicht in den Arbeitsspeicher des Entwicklungsrechners passen wird die Funktionalität des Train / Testsplit zunächst in SQL geschrieben, damit dies von dem Datenbankserver übernommen werden kann, der genügend Ressourcen zur Verfügung hat. 
+
+
+
+Da die Labels der Daten sehr unausgeglichen sind 
+
+
+%Jedes Verfahren wird mit Upsampling brauchbar gemacht.
+%Warum? (grob: was ist upsampling / oder Kapitel 4 verweisen)
+%Wie wird das Upsampling gemacht?
 
 KNN
 - trainieren
+    - Mit / Ohne Upsampling
+    - Mit gleicher / ungleicher Klassenverteilung
+    - unterschiedliche K - Werte
 - Modell Bewerten 
     - train dev test
     - f1-score, accuracy und precision
@@ -158,10 +186,34 @@ In diesem Kapitel wurden die Verfahren KNN, SVM, blabla getestet und der beste K
 
 %https://www.elastic.co/guide/en/kibana/6.8/createvis.html
 
+\subsection{Visualisierung}
+Damit die Daten für die Visualisierung verfügbar sind, müssen diese zunächst in das Visualisierungstool integriert werden. 
+Da zur Erstellung des Dashboards das Tool Grafana vorgeschlagen und verwendet wird, müssen die Daten an Grafana angebunden werden.
+Hierfür wäre es sinnvoll einen Konnektor zu verwenden, der es ermöglicht Grafana direkt mit der DB2 Datenbank zu verbinden. 
+Es sind einige Konnektoren als Plugin für Grafana verfügbar, allerdings fehlt dort die Möglichkeit eine DB2-Datenbank anzubinden. \cite{https://grafana.com/grafana/plugins?type=datasource}
+Auch fehlt die Möglichkeit über eine allgemeine JDBC-Verbindung proprietäre Datenbanksysteme anzubinden. 
+Die Daten werden mit Hilfe der DB2-Exportfunktionalität exportiert und als CSV-Datei gespeichert. 
+Diese Datei wird anschließend mit Hilfe von SQL in eine MySQL Datenbank exportiert. 
+Um die Daten regelmäßig zu migrieren kann ein Cron-Job verwendet werden, der beispielsweise einmal in der Nacht ausgeführt wird. 
+Als Alternative zur Verwendung der MySQL-Datenbank ist das Plugin CSV von Grafana zu nennen. 
+Allerdings ist dieses Plugin noch in einer frühen Entwicklungsphase und wird deshalb nicht in diesem Projekt verwendet. \cite{https://grafana.com/grafana/plugins/marcusolsson-csv-datasource?pg=plugins&plcmt=featured-undefined}
+Des weiteren bietet Grafana die Möglichkeit Daten mit Hilfe eines JSON-Formats zu importieren. 
+Da es allerdings leichter ist Daten mit Hilfe eines SQL-Syntaxes abzufragen wird hier der Weg gewählt die Daten mit Hilfe der MySQL-Datenbank anzubinden.
+
+
+- Data Quality Report anhand der ABT.
+
+
 Integration der Daten in Kibana
 - ETL Prozess zur automatischen Erzeugung einer CSV-Datei.
 - Logstash?
 - 
+
+- Visualisierung von Unterschieden:
+- Aggregiert nach Wochentag / Monat
+- Umsatzdaten
+- Kundendaten (Neukundenzuwachs?)
+
 
 Kibana, Graphana
 
