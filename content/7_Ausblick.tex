@@ -1,0 +1,50 @@
+\chapter{Ausblick}\label{ch:outlook}
+%Nachfolgend alles Fazit: ?
+Die Ergebnisse der Klassifikation sind nicht so gut, wie erwartet. 
+Allerdings konnte gezeigt werden, dass es prinzipiell möglich ist Daten vorherzusagen.
+Durch die Ausarbeitungen der Datenaufbereitung können zukünftig neue Experimente durchgeführt werden, ohne die Daten beschaffen zu müssen. 
+Es ist somit sehr viel schneller möglich Experimente durchzuführen.
+Deshalb ist für einen produktiven Einsatz wichtig den trainierten Klassifikator an den korrekten Positionen einzusetzen, um einen tatsächlichen Mehrwert zu schaffen.
+
+
+%Ausblick
+In weiteren Experimenten sollten noch weitere Klassifikatoren und deren Performance getestet werden.
+Hierfür könnten sich Neuronale Netze anbieten, da diese gezeigt haben, dass sie für sehr viele verschiedene Anwendungsgebiete gute Ergebnisse erzielen.
+Es sollten noch weitere Daten exportiert werden. 
+Aktuell liegen Daten von knapp einem Jahr vor, allerdings können die Ergebnisse noch weiter verbessert werden, wenn noch mehr Daten von den Klassen, die sehr wenig vertreten sind, zum Training gesammelt werden. 
+
+% Binning (Numerische Featues in kategorien einteilen erste 1000, nächste 1000 usw) Kapitel 3.6.2 Fundamental of ML
+
+Um das Thema Datenqualität vollständig innerhalb eines Data Warehouse umzusetzen und zu etablieren sind noch einige weitere Schritte nötig.
+Außer den vorgestellten Methoden zur automatischen Analyse und Visualisierung der Datenqualität, sind manuelle Tätigkeiten nötig.
+Hierfür müssen die Business User 
+
+
+Des Weiteren kann es sinnvoll sein sich mit unüberwachtem Lernen und Verfahren im Bezug auf Datenqualität zu beschäftigen.
+Hierfür wurde in der Arbeit die Idee und der Ansatz von Talend skizziert. 
+Allerdings benötigt dieses Verfahren manuelle Tätigkeiten und nutzt so nicht die Vorteile von automatischen und unüberwachten Lernmethoden aus. 
+
+
+
+
+
+Textuelle Daten: 
+% TODO Als Erweiterung kann der SpellChecker verwendet werden, um direkt die Daten zu verbessern, in dem dieser verwendet wird und die besten passenden Wörter als Alternative einsetzt. 
+% Dies ist allerdings mit Vorsicht zu benutzen, da so gravierendere Fehler entstehen können, wenn der SpellChecker Wörter als richtig ansieht, die nichts mit dem eigentlichen Wort zu tun haben. 
+% Vor allem liegt dies daran, dass der SpellChecker keine inoffiziellen Abkürzungen kennt. 
+% Beispielsweise schlägt der Spellchecker für die Abkürzung 'öfftl', die vermutlich öffentlich bedeuten soll, das Wort Löffel vor. 
+
+
+Visualisierung:
+Weitere Dashboards. Mehr Daten sammeln. Zukünftige Beobachtungen nachvollziehen. 
+
+
+
+In einer zukünftigen Version des Dashboards könnten die Tickets, die die Lösung des Problems beinhalten verknüpft werden. 
+So kann ein Entscheider sofort erkennen, wie weit die Lösung des Problems ist und ob überhaupt eine Lösung des Problems beauftragt wurde. 
+Dafür kann das für Grafana verfügbare Plugin 'Jira' verwendet werden. \cite{https://grafana.com/grafana/plugins/grafana-jira-datasource?pg=plugins&plcmt=featured-undefined}
+Zusätzlich zur Anbindung von Jira als Ticketservice für Entwicklungstickets, könnte ServiceNow angebunden werden, um auch technische Probleme der Server oder der Infrastruktur zu überwachen. 
+\cite{https://grafana.com/grafana/plugins/grafana-servicenow-datasource?pg=plugins&plcmt=featured-undefined}
+Durch das Anbinden dieser Datenquelle ist es für einen Entscheider einfacher zu erkennen, ob das Problem, der schlechteren Datenqualität, durch die Entwicklungs- oder Infrastrukturabteilung entstanden ist. 
+Anhand dieser Verknüpfung kann auch erkannt werden, welche der Tickets für das Auftreten eines Datenqualitätsproblems verantwortlich sein könnte, indem die Bearbeitungs- bzw. Fertigstellzeit mit dem Auftreten des Problems verglichen wird. 
+

@@ -1,23 +1,23 @@
 \chapter{Methoden}\label{ch:method}
 Um die nachfolgenden Methoden zur Analyse und Visualisierung von Datenqualität zu vergleichen, werden sowohl qualitative als auch quantitative Untersuchungen durchgeführt.
 Für eine Datenqualität, die sich in einem Unternehmen etablieren kann, ist es nötig diese von den Gesichtspunkten aller Stakeholdern zu betrachten.
-Anhand einer Stakeholderanalyse wird es möglich sein die Probleme der Datenqualität auf zwei Ebenen zu betrachten. 
+Anhand einer Stakeholder-Analyse wird es möglich sein die Probleme der Datenqualität auf zwei Ebenen zu betrachten. 
 Zum einen benötigen die Business-User gute Datenqualität, um die richtigen Zinsen anhand des Risikoscorings zu vergeben und auf der anderen Seite benötigen die Entwickler eine Möglichkeit, um ihre ETL-Strecken zu überprüfen.
 Für diese beiden Probleme können zwei verschiedene Verfahren eingesetzt werden.
 Zur Identifikation und Überprüfung des Risikoscores kann ein Machine Learning Algorithmus trainiert werden, der die korrekten Werte vorhersagt und somit einen Aufschluss darüber gibt, wie viele Datensätze aktualisiert werden sollten.
 Um die ETL-Strecken zu analysieren sind die Metadaten zu den Prozessen nötig, die anzeigen, wie viele Daten an jedem Tag extrahiert wurden. 
 Auffälligkeiten können dann genutzt werden, um Maßnahmen einzuleiten.
-Hierfür bietet sich eine Visualisierung an, die in Echtzeit die Daten geliefert bekommt und anschließend interpretierbar darstellt.
+Hierfür bietet sich eine Visualisierung an, die in Echtzeit die Daten verarbeitet, analysiert und anschließend interpretierbar darstellt.
 Die beiden beschriebenen Verfahren werden in dem Kapitel Experimente durchgeführt. 
 %Datakitchen
 
 
 
-\section{Stakeholderanalyse}
-Als Stakeholder 
-Mit Hilfe einer Stakeholderanalyse ist es möglich, die negativen Einflüsse zu erkennen und die positiven Einflüsse zu nutzen.
+\section{Stakeholder-Analyse}
+\label{sec:Stakeholder-Analyse} 
+Mit Hilfe einer Stakeholder-Analyse ist es möglich, die negativen Einflüsse zu erkennen und die positiven Einflüsse zu nutzen.
 Zum Anderen können die Erwartungen der einzelnen Stakeholder erkannt und die Projektziele richtig gewichtet werden. \\
-Die Stakeholderanalyse wird nach folgenden Schritten durchgeführt: 
+Die Stakeholder-Analyse wird nach folgenden Schritten durchgeführt: 
 
 \begin{enumerate}
  \item Stakeholder identifizieren
@@ -38,14 +38,21 @@ Aufgrund der Analyse des mittelständischen Unternehmens aus der Bankenbranche k
 \item Product Owner         % Verwalter
 \end{itemize}
 
+
+
+
+
 Als Stakeholder lassen sich zunächst die Entwickler identifizieren.
 Diese sind für die Einhaltung einer guten Datenqualität unmittelbar wichtig, da diese die Extraktionsprozesse entwickeln, die zu Fehlern in der Datenqualität führen können.
 %Warum kann es überhaupt passieren, dass nicht alle Daten exportiert werden?
 Die Daten werden von einem legacy-System in das Data Warehouse übertragen, indem die Daten aus einer hierarchischen Datenbank als Datei abgelegt werden.
 Ein Prozess iteriert über alle Dateien und extrahiert die Daten, die anschließend neu strukturiert im Data Warehouse abgelegt werden.
 Aufgrund von einigen Problemen in der Extraktion kann es dazu führen, dass die Daten nicht korrekt extrahiert werden.
-Für diesen Fall gibt es eine Überwachung der Programme, die einen Fehler meldet.
+Für diesen Fall gibt es eine Überwachung der Programme, die einen Fehler bei der Verarbeitung meldet.
 Wenn jedoch weniger oder mehr Daten verarbeitet werden als üblich deutet dies auch auf einen Fehler in der Extraktion hin. 
+Dieser Fall wird aktuell noch durch keinen Mechanismus oder Programm erkannt. 
+Als Lösung für dieses Problem bietet sich eine Visualisierung an, anhand der die Schwankungen aufgezeigt und dargestellt werden können. 
+Ein Entwickler kann anhand der Visualisierung erkennen, ob durch seine Programmänderung die Schwankung der Datenmengen innerhalb der saisonalen Schwankungen ist oder, ob seine Änderung einen neuen Fehler verursacht hat. 
 %Probleme: Keine Datei wird mehr an einem Ordner abgelegt, weil fehler im anderen System -> keiner merkt was, Daten nicht mehr aktuell
 %Probleme: Zweite Änderung während Extraktion läuft -> Primärschlüssel doppelt -> deduplizierung -> wenn fehler in Primkey, dann werden ganz viele Daten gelöscht, was ungewöhnlich ist
 %Allerdings werden die Dateien teilweise nicht schnell genug abgeholt und die Daten werden überschrieben
@@ -60,8 +67,20 @@ Dieser berechnet einen Risikoscore, anhand dessen die Zinsvergabe erfolgt.
 %CRM sind auch Business User, die korrekte Daten haben wollen
 
 Des weiteren ist der Bankmitarbeiter Bestandteil der Kreditvergabe. 
-Die Kreditvergabe erfolgt anhand einer Bewertung des Kunden, je nachdem wie gut der Risikoscore des Kunden ist, umso bessere Zinssätze bekommt dieser.
+Die Kreditvergabe erfolgt anhand einer Bewertung des Kunden, je nachdem wie gut der Risikoscore des Kunden ist, umso bessere Zinssätze erhält dieser.
 Für den Bankmitarbeiter ist es wichtig, dass die Daten zum Risikoscoring sowohl richtig als auch aktuell sind.
+
+Nicht nur Fehler in numerischen Daten, sondern auch in Texten sind festzustellen. 
+Dies führt zu falschen Interpretationen bzw. dazu, dass ein Kunde nicht den richtigen Risikoscore erhält. 
+Auch fehlende Daten führen zu Fehlern.
+Dies ist ein Fall, der sowohl für den Kunden als auch für die Bank selbst zu einem Problem führt. 
+Der Kunde erhält nicht den für ihn bestmöglichen Risikoscore und die Bank verliert einen Kunden, da diese verglichen mit der Konkurrenz nicht den besten Kredit vergeben kann. 
+Es kann allerdings auch passieren, dass die Bank dem Kunden einen besseren Score vergibt, da der Beruf falsch interpretiert wird und muss somit ein höheres Risiko eingehen und die Bank kann ihr Risiko nicht korrekt abschätzen. 
+
+
+
+
+
 
 Die beschriebenen Stakeholder werden mit ihren Erwartungen an das Projekt in der folgenden Grafik dargestellt.
 \subsection{Betroffenheitsanalyse}
@@ -128,10 +147,39 @@ Zunächst wird diese generiert, um festzustellen, ob die Daten für weitere Unte
 Anschließend kann ein Plan entwickelt werden, der darstellt, welche Maßnahmen bei unterschiedlichen Datenqualitätsproblemen getroffen werden kann.
 
 
+\section{Statistische Verfahren für textuelle Attribute}
+\label{sec:textVerfahren}
+Zur Verbesserung von Texten sind bereits einige Verfahren bekannt, die sich ohne manuellen Aufwand umsetzen lassen.
+Eines dieses Verfahren ist die Berechnung der Rechtschreibfehler in den Daten, die als Texte gespeichert sind. 
+Solche Fehler entstehen beispielsweise durch die Verwendung von Freitextfeldern in IT-Systemen.  
+Einige der in \cite{kiefer2019} vorgestellten Methoden zur Analyse von Datenqualität in Textdaten können auch in diesem Projekt angewendet werden. 
+Dazu zählt neben der oben genannten Rechtschreibfehlerberechnung auch der Anteil der unbekannten Wörter. 
+Die anderen vorgestellten Verfahren können nicht angewendet werden, da diese sich auf den Kontext von Wörtern oder auf Sätze beziehen und die textuellen Daten in diesem Projekt lediglich zusammenhangslose Wörter sind.
+%TODO so lassen:? 
+In zukünftigen Projekten, in denen Daten mit Sätzen analysiert werden, sollten die Verfahren, die nur mit Sätzen möglich sind auch in Betracht gezogen werden. \\
+
+Die Autoren schlagen als Tool zur Berechnung der Fehler pyenchant vor. \cite{https://pypi.org/project/pyenchant/}
+Pyenchant verwendet unter Anderem Hunspell,\cite{https://abiword.github.io/enchant/} das für bekannte Software, wie z.B. LibreOffice und Firefox zur Rechtschreibkorrektur eingesetzt wird. \cite{http://hunspell.github.io/}
+In den Experimenten wird dieses Verfahren praktisch umgesetzt und dessen Ergebnisse dargestellt. 
+Der Vorteil einer solchen Berechnung ist, dass nicht nur die Fehler aufgezeigt werden können, sondern auch erkannt wird, welche Daten die Fehler beinhalten. 
+Diese können dann an die Stakeholder gegeben werden, um nachgebessert zu werden.
+Zukünftig könnten solche Texte auch automatisch mit einer Rechtschreibkorrektur verbessert werden \cite{kiefer2019} \\
+
+Der Anteil der unbekannten Wörter ist ein weiteres Indiz für eine schlechte Datenqualität. \cite{kiefer2019}
+Sobald mit diesen Daten Texte analysiert werden sollen, ist dieser Aspekt von besonderer Bedeutung.    Dies gelingt nur, wenn die Verfahren zur automatischen Texterkennung und Analyse die Texte verstehen bzw. interpretieren können. 
+Wörter, die zwar nach pyenchant keinen Rechtschreibfehler beinhalten, könnten von einer NLP-Bibliothek, wie NLTK trotzdem nicht erkannt werden. 
+Zur Berechnung der unbekannten Wörter kann NLTK verwendet werden. \cite{kiefer2019}
+NLTK erzeugt dafür eine Eigenschaft, indem die jeweiligen Wörter mit einem 'X' gekennzeichnet werden. \cite{kiefer2019}
+In diesem Projekt liegen nur textuelle Daten zu den Berufen vor, die nicht aufgrund der Anonymisierung unlesbar sind. 
+Da eine solche Aussage nur für Texte sinnvoll ist, die in vollständigen Sätzen vorliegen, wird dieses Verfahren in den Experimenten nicht genauer erläutert. 
+In zukünftigen Projekten, die sich mit Texten beschäftigen, die von Nutzern geschrieben wurden, ist diese Methode sinnvoll, um Texte analysierbar und nutzbar für die Stakeholder zu machen. 
+
+
 
 %Nach \cite{pipino2002} besteht die Schwierigkeit nicht darin die Metriken zu formulieren, sondern die Datenqualitätsdimension zu definieren, die auf den spezifischen Anwendungsbereich des Unternehmens passt. 
 
 %Evtl. kann hier doch noch die Simple Ratio verwendet werden, um die Anzahl der falschen Daten, die das ML errechnet anzuzeigen.%
+
 
 
 \section{Machine Learning}
@@ -155,7 +203,7 @@ Der Dienstleister erhält einige Daten über eine Schnittstelle und anschließen
 Dieser Risikoscore kann mit Hilfe von Machine Learning Methoden berechnet werden, um zu überprüfen, welche Daten aktualisiert werden sollten.
 Bei den Daten, bei denen der Wert Abweichungen aufweist können neue Daten angefordert werden.
 Dies verbessert die Dimensionen der Richtigkeit und vor allem der Aktualität, die ein Teilgebiet der Richtigkeit darstellt.
-\\ \\
+\\
 Die Scores, die der Klassifikator erzeugt können nicht ausschließlich als Basis für Entscheidungen verwendet werden und kann deshalb nur dabei helfen zu entscheiden, welche Daten aktualisiert werden sollten.
 Dies liegt daran, dass Risikoscores nur mit Hilfe von Regressionen berechnet werden dürfen und nicht mit beispielsweise Neuronalen Netzen.
 
@@ -220,7 +268,16 @@ So kann die Datenqualität verbessert werden, indem speziell die Eigenschaften d
 
 
 
-\textbf{Standardisierung}
+\textbf{Skalierung}
+Skalierung wird angewendet, um die Wertebereiche der Attribute zu normalisieren. 
+Dies ist notwendig, da einige Klassifikatoren den Abstand verwenden, um die Zugehörigkeit eines Datenwertes zu einer Klasse zu berechnen.
+Hierfür ist es notwendig, dass jedes Attribut den gleichen Einfluss haben kann und nicht das Ergebnis durch ein Attribut dominiert wird. 
+Hierfür werden die Eigenschaften der Daten so verändert, dass alle 
+
+Eine Möglichkeit der Skalierung ist die Standardisierung. 
+Bei der Standardisierung werden die Werte von den Daten so skaliert, dass diese eine einheitliche Standardabweichung haben. %https://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html
+% Standardization involves rescaling the features such that they have the properties of a standard normal distribution with a mean of zero and a standard deviation of one.
+
 Mit Hilfe der Min/Max-Normierung können Merkmale auf den Wertebereich [0,1] abgebildet werden. 
 
 Standardisierung
@@ -236,28 +293,76 @@ Standardisierung
 %Da es einige Features gibt, muss evtl. zuerst eine Dimensionsreduktion vorgenommen werden.
 
 
+
+\subsection{Lösungsansätze für den unbalancierten Datensatz}
+In der Verteilung der Daten ist zu erkennen, dass die Klasse, die vom Modell erkannt werden soll unterschiedlich häufig auftreten. 
+Dieses Phänomen nennt sich unbalancierter Datensatz und kann dazu führen, dass der Klassifikator die Klasse, die häufiger vertreten, ist bevorzugt. 
+Fernandez beschreibt im Buch \cite{Chapter 2 Foundations on Imbalanced Classification von Fernandez}  zwei Handlungen, die zur Lösung berücksichtigt werden müssen. 
+
+\begin{enumerate}
+ \item Die Bewertung des Modells darf nicht nur anhand der Accuracy bewertet werden. Ein Datensatz, bei dem 90\% zu Klasse A gehören, könnte eine Accuracy von 90 \% erreichen, indem dieser alle Datensätze als A klassifiziert. Dies könnte zu dem fatalen Schluss führen, der Klassifikator wäre gut geeignet, obwohl dieser nur 0 \% der Klasse B erkannt hat. Als Lösung bieten sich andere Metriken wie beispielsweise f1-Score, precision, recall und ROC an.  
+ \item Die Modelle müssen so trainiert und gewählt werden, dass diese die kleinere Klasse gut erkennen können. Außerdem muss dadurch die Accuracy trotzdem gut bleiben. 
+\end{enumerate}  \cite{Chapter 2 Foundations on Imbalanced Classification von Fernandez} 
+
+Um das Problem mit den unbalancierten Datensätzen zu lösen existieren einige Ansätze. 
+\cite{Chapter 2 Foundations on Imbalanced Classification von Fernandez} 
+
+In dieser Arbeit werden zwei der vorgeschlagenen Lösungen in den Experimenten genauer untersucht. 
+Diese ist zum einen das Under- bzw. Oversampling, das auf Datensatzebene die Klassen neu verteilt, um so die Gewichtung der Klassen zu verbessern. 
+Zum anderen wird die Möglichkeit getestet durch Veränderung der Kostenfunktion die Falschklassifikation der weniger vorhandenen Klasse mehr zu bestrafen. 
+Dadurch muss das Modell sich besser für die schlechteren Klassen anpassen und erzielt somit bessere Ergebnisse. 
+\cite{Chapter 2 Foundations on Imbalanced Classification von Fernandez} 
+
+
 \textbf{Modellbewertung}
-Mit Hilfe von einigen Metriken kann die Güte des Klassifikators bewertet werden.
-Dies hilft dabei die besten Parameter und das am besten für diesen Anwendungsfall geeigneten Klassifikator zu finden.
+Wie beschrieben reicht die Metrik der Accuracy zur Beurteilung von unbalancierten Problemen nicht aus.
+Deshalb werden nachfolgend alternative Metriken beschrieben, die mehr Aufschluss über die generelle Güte des Klassifikators geben. 
+Die Bewertungsmechanismen helfen dabei die besten Parameter und den am besten für diesen Anwendungsfall geeigneten Klassifikator zu finden.
 Folgende Verfahren werden häufig bei der Bewertung eingesetzt:
-- Accuracy
-- Precision und Recall
+
+\textbf{Accuracy}
+Diese Metrik gibt an, wie viele der vorhergesagten Werte richtig sind. %\cite{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html#sklearn.metrics.accuracy_score}
+
+
+\textbf{Precision} \cite{Fundamentals of ML Kapitel 8.4.2.2} \\
+Precision ist definiert als: \\
+\begin{equation}
+ \frac{TP}{(TP+FP)}
+\end{equation}
+Precision beschreibt den Grad an, wie oft ein Datensatz, der vom Klassifikator als korrekt klassifiziert wird, tatsächlich korrekt ist. 
+
+\textbf{Recall} \\
+Recall ist definiert als: \\
+\begin{equation}
+ \frac{TP}{(TP+FN)}
+\end{equation}
+Recall gibt an, wie viele der positiven Klassen vom Modell als positiv klassifiziert werden. 
+
+
+Da in dem vorliegendem Klassifikationsproblem ein Multiklassenproblem herrscht, müssen für diese Precision und Recall mit den Ergebnissen aller Klassen vereint werden. 
+Hierfür gibt es mehrere Möglichkeiten. 
+%\cite{https://scikit-learn.org/0.15/modules/generated/sklearn.metrics.precision_score.html#sklearn.metrics.precision_score}
+
+
+
 - Sensitivity und Specifity
 - F-Score
 - confusion matrix
 - auc - roc curve \\
-Da die Confusion Matrix TP, FP, FN und TN angibt ist diese gut geeignet, da sowohl die 
+Da die Confusion Matrix TP, FP, FN und TN angibt ist diese gut geeignet. 
 Allerdings ist die Standard Confusion Matrix nur für ein Zweiklassen Problem geeignet und in diesem konkreten Fall wird mit einem Mehrklassenproblem gearbeitet.
-Deshalb muss die Confusion Matrix erweitert werden auf ein Mehrklassenproblem.
+Deshalb muss die Confusion Matrix auf ein Mehrklassenproblem erweitert werden.
 Diese Multiklassenerweiterung ist in dem verwendeten Framework sklearn implementiert und kann ohne weitere Einstellungen verwendet werden.
 %https://stats.stackexchange.com/questions/179835/how-to-build-a-confusion-matrix-for-a-multiclass-classifier
 
 \textbf{Under- bzw. Oversampling}
 Des weiteren werden in den Experimenten mit den Techniken des Under- bzw. Oversamplings gearbeitet. 
 Diese Verfahren sind in der Lage unbalancierte Datensätze, wie den vorliegende Datensatz, für die Modelle vorzubereiten. 
-Dies geschieht beim Undersampling, indem die Daten so reduziert werden, dass die Daten, die in einer hohen Klassendichte vorhanden sind, in etwa gleich mit den anderen Klassen sind. 
+Dies geschieht beim Undersampling, indem die Daten reduziert werden, sodass alle Klassen die gleiche Verteilung aufweisen. 
 Beim Oversampling auf der anderen Seite werden die Daten, die in einer Unterzahl sind durch mehrmaliges einfügen auf die Menge der anderen Klassen gebracht. 
 Dies führt dazu, dass in den Daten, Datensätze redundant vorhanden sind. 
+Deshalb sollte dieses Verfahren nur auf den Trainingsdaten angewendet werden, da sonst der Klassifikator mit den gleichen Daten trainiert wird, die auch zum Testen verwendet werden. 
+Auch das Undersampling sollte nur auf den Trainingsdaten erfolgen, da sonst nicht überprüft wird, wie der Klassifikator in einer realen Anwendung abschneiden würde, in der die reale Verteilung der Daten vorliegt. \cite{ZITAT}
 \cite{ML 3.6.3 Sampling}
 Der Nachteil des Oversamplings besteht darin, dass die Modelle overfitten, da mehr Datensätze die gleiche Klasse repräsentieren, sie werden also tendenziell bevorzugt. 
 \cite{ML 4.4.4 Tree Pruning}
@@ -265,6 +370,7 @@ Oversampling wird verwendet, wenn zu wenig Datensätze vorhanden sind und Unders
 
 \textbf{Modell Anpassung}
 Als Alternative zum Sampling können die Modelle stärker bestraft werden, wenn diese falsch klassifizieren. 
+Dies führt dazu, dass die Modelle besser generalisieren, da die 
 
 % "Adjusting Class Votes" für Sigmoid und Majority Vote
 % Nachfolgender Link zeigt die Verwendung von Class-weights in SVM https://machinelearningmastery.com/cost-sensitive-svm-for-imbalanced-classification/
@@ -279,6 +385,8 @@ Optimierung von Hyperparametern
 Vergleichen der versch. ROC-Kurven:
 ROC / AUC
 
+%TODO Was ist Overfitting
+
 \subsection{Auswirkungen der einzelnen Merkmale auf das Gesamtscoring}
 Es ist wichtig zu wissen, wie sich das Scoring zusammensetzt, um gezielt die Daten zu verbessern, die einen großen Einfluss haben. 
 
@@ -292,6 +400,90 @@ Die Stakeholder können anhand diesem Dashboards sofort erkennen, ob die Datenme
 Dies ist ein Indiz für Fehler, die in der Programmierung entstanden sind.
 
 
+\subsection{Data Quality Dashboard / Auswahl des richtigen Tools zur Visualisierung}
+% Tableau beschreiben , beispiel
+% Grafana, Kibana
+% Bewertung von Tablaeu anhand Experten Meinung 
+% Eigener Vorschlag / Konzept Visualisierung 
+
+% Befragung des Experten?
+
+Es gibt einige Unternehmen, die Software anbieten, mit denen Visualisierungen und Analysen erstellt werden können. 
+Beispielsweise gibt es das Unternehmen Tableau, das eine umfassende Software anbietet, mit der Visualisierungen erstellt, aber auch ETL-Prozesse grafisch entwickelt werden können.  
+\cite{https://www.tableau.com/de-de/why-tableau/what-is-tableau}
+
+Auf der Webseite von Tableau ist ein Beispiel für ein Data Quality Dashboard zu sehen. 
+Dieses stellt die unterschiedlichen Qualitätsmetriken dar und mit Hilfe einer Ampellogik können Entscheider erkennen, ob die Qualität ihren Vorstellungen entspricht.
+Siehe \cite{https://public.tableau.com/views/DataQualityDashboards/Dashboard1?:embed=y&:showVizHome=no&:display_count=y&:display_static_image=y&:bootstrapWhenNotified=true}
+Die Stakeholder in dem vorliegenden Projekt haben nach Befragungen erklärt, dass sie ein solches System gesehen haben und sich wünschen. 
+Sie erhoffen sich dadurch Aussagen zur Daten Qualität treffen zu können, falls sie Auskunft darüber geben sollen. 
+Die Vorteile liegen also nur darin eine Aussage zu treffen nicht aber, um tatsächlich mit dem Ergebnis etwas anzufangen. 
+Daraus ergeben sich erst in weiteren Schritten tatsächliche Vorteile, die weitere Voraussetzungen benötigen.
+Es ist notwendig einen konkreten Stakeholder zu bestimmen, der für die Einhaltung der Qualität verantwortlich ist.
+Ohne eine solche Person können Probleme, die aufgrund schlechter Datenqualität entstehen, nicht behoben werden, da keiner Zeit und Energie in eine Lösung steckt.
+
+Um ein solches Dashboard zu erzeugen müssen einige Vorarbeiten von den Stakeholdern geleistet werden.
+Jedes Datenattribut benötigt einen Wertebereich, um eine Aussage darüber treffen zu können, ob ein Attribut innerhalb der geforderten Datenqualitätsdimension liegt oder außerhalb.
+Des weiteren muss definiert werden, bei welcher Abweichung ein Attribut als rot, grün bzw. gelb markiert werden sollte. 
+In der Grafik von Tableau ist allerdings auch zu erkennen, dass diese 
+
+Insgesamt ist die Aussagekraft eines solchen Dashboards zu hinterfragen. 
+
+Als Erweiterung zu dem dargestellten Dashboard ist eine Drill-Down Funktionalität notwendig.
+Mit dieser ist es möglich auf das Datenattribut selbst zuzugreifen. 
+Anschließend kann dieses Attribut, wenn klar ist, wo es herkommt und wer es erzeugt hat, ausgebessert werden.
+% Von Experten Interview 
+An dieser Stelle wäre es nötig die Quelle selbst zu verbessern. % An der Quelle suchen
+Es können auch Probleme auftreten, die erst durch den Programmcode der Entwickler entstanden ist.
+Hierfür wird nachfolgend eine Möglichkeit dargestellt, um die Extraktionen zu überwachen.
+% Fehler in den Daten -> abbruch -> Neustarten -> zurück an Entwicklungsabteilung
+% Richtige Anzahl extrahiert (ist gleich viel auf beiden Seiten) (einfaches Group By bzw Rollup)
+% 
+Als Alternative bietet sich eine Visualisierung mit Kibana oder Grafana an.
+Dies sind Tools mit denen auch ein Dashboard dargestellt werden kann.
+Im Gegensatz zu Tableau, liefern diese zwar nicht die Funktionalität für ein explizites Data Quality Dashboard, allerdings könnte ein solches nur durch den beschriebenen manuellen Aufwand der Stakeholder, der Definition von Schwellwerten, befüllt werden.
+Mit Hilfe der Visualisierungsmöglichkeiten in Grafana und Kibana ist es dennoch möglich Aussagen über die Datenqualität abzuleiten, für die kein manueller Aufwand durch die Stakeholder nötig ist.
+Eine dieser Möglichkeiten ist eine Zeitreihenanalyse, mit der die Daten im historischen Kontext betrachtet werden können.
+Dazu müssen die Daten in das Tool integriert werden und anschließend mit Hilfe der eingebauten SQL-Engine richtig gruppiert werden.
+%Hier noch mehr Argumente finden
+Anschließend können anhand der Visualisierung erkannt werden, ob es Tage oder Programme gibt, die besonders viel Zeit benötigen oder ob bestimmte Attribute ungewöhnlich häufig verändert wurden. \\
+
+\textbf{Warum Grafana}
+Die beiden Tools Grafana und Kibana sind beide Open-Source und bieten somit eine kostengünstige Variante an, um ein Dashboard zu erstellen. 
+Des weiteren bietet Grafana eine Vielzahl von Plugins an, die es ermöglichen die Software einfach zu erweitern, um neue Funktionalität hinzuzufügen. 
+Hierfür können auch eigenen Plugins geschrieben werden, wenn diese benötigt werden.
+
+Die Stärken von Kibana liegen allerdings in der Auswertung von Log-Dateien.
+Diese Fähigkeiten werden allerdings nicht benötigt, sondern es werden Daten visualisiert, die schon als relationale Daten vorhanden sind. 
+Auch die Metadaten der Prozesse werden aus Log-Dateien schon in eine relationale und leicht weiterverarbeitbare Form gebracht. 
+Deshalb wäre es nicht sinnvoll die Daten wieder in Log-Dateien zu überführen, wenn die Daten schon in einer Form vorliegen, in der sie gut weiterverarbeitet werden können. 
+Grafana bietet zu dem, im Gegensatz zu Kibana, die Möglichkeit die Daten mittels SQL aufzubereiten und zu aggregieren. 
+Des weiteren müsste für die Verwendung von Kibana noch zusätzlich Elastic eingerichtet, verwaltet und verwendet werden. 
+Falls in Zukunft Daten aus Elasticsearch verwendet werden würde, könnte dies auch in Grafana integriert werden, da die Software auch dafür eine Anbindung anbietet. 
+
+Beispielsweise bietet Grafana eine Vielzahl von Plugins an.
+
+\textbf{Integration der Daten in Grafana} \\
+Diese können verwendet werden, um komfortabel Daten anzubinden.
+Eine Möglichkeit ist das Plugin CSV, das in der Lage ist Daten aus einer CSV-Datei direkt in Grafana zu verwenden. 
+Allerdings ist dieses Plugin noch in einer frühen Entwicklungsphase und wird deshalb nicht in diesem Projekt verwendet. \cite{https://grafana.com/grafana/plugins/marcusolsson-csv-datasource?pg=plugins&plcmt=featured-undefined}
+Des weiteren bietet Grafana die Möglichkeit Daten mit Hilfe eines JSON-Formats zu importieren. 
+
+Es sind einige Konnektoren als Plugin für Grafana verfügbar, allerdings fehlt dort die Möglichkeit eine DB2-Datenbank anzubinden. \cite{https://grafana.com/grafana/plugins?type=datasource}
+Auch fehlt die Möglichkeit über eine allgemeine JDBC-Verbindung proprietäre Datenbanksysteme anzubinden.
+
+
+% kostenlos
+% einfach anzubinden, da nicht konvertierung in log-Dateien notwendig 
+% Umfangreiche Anzeige möglichkeiten von Daten -> Dashboards
+% Zeitreihenanalyse für Anomalie Erkennung 
+
+
+% Preis
+% Einfache Integration 
+% Anzeige der Daten als Dashboard (erfüllen alle 3)
+% Zeitreihenanalye 
+% Interaktiv
 
 - Kibana Daten
 - Dashboard für Ampel logik
@@ -317,6 +509,9 @@ Anschließend werden die Daten in das korrekte Format konvertiert und den Endsys
 Eine mögliche Visualisierung sollte die Meta-Daten, die von den Quellsystemen extrahiert werden erhalten und anschließend visualisieren.
 Hierfür wird per Trigger die Daten in Echtzeit an Elastic übertragen, dass die Daten anschließend mit Hilfe eines Kibana Dashboards visualisiert.
 Stakeholder sind dann in der Lage grafisch zu sehen, ob es große Abweichungen zu den Monaten / Wochen / Jahren davor gegeben hat und können so einschätzen, ob genauer nachgeforscht werden muss oder ob alles geklappt hat.
+
+
+
 
 %Daten zur Beladung (Delta, Vollbestand) in Echtzeit aus dem DWH nach Elastic exportieren
 %-> Anhand eines Dashboards ist es möglich festzustellen, ob es Abweichungen gibt

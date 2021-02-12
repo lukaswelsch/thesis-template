@@ -3,7 +3,7 @@
     a4paper,
     egregdoesnotlikesansseriftitles,
     toc=chapterentrywithdots,
-    twoside,openright,
+    openright,
     titlepage,
     parskip=half,
     headings=normal,  % reduces heading size
@@ -13,7 +13,9 @@
     captions=tableheading,  % caption below table
     chapterprefix,
     listof=flat,
-    final
+    final,
+    oneside,
+    hyperref
 ]{scrbook}
 
 \makeindex
@@ -132,6 +134,7 @@
 \loadglsentries{glossary}
 
 \begin{document}
+\selectlanguage{ngerman}
 
 \setcounter{secnumdepth}{3}  % numerate subsections
 \setcounter{tocdepth}{2}  % ...but don't include them in toc
@@ -150,11 +153,12 @@
 \mainmatter
 \input{content/1_Einleitung}
 \input{content/2_Grundlagen}
-\input{content/3_Daten}
-\input{content/4_Methoden}
-\input{content/5_Experimente}
-\input{content/6_Ausblick}
-\input{content/7_Fazit}
+\input{content/3_Anforderungsanalyse}
+\input{content/4_Daten}
+\input{content/5_Methoden}
+\input{content/6_Experimente}
+\input{content/7_Ausblick}
+\input{content/8_Fazit}
 
 % remove if not needed
 \appendix
@@ -171,6 +175,7 @@
 \lstlistoflistings
 \cleardoublepage
 
+%TODO auf ieetr ändern? 
 \bibliographystyle{wmaainf}
 \bibliography{refs}
 
