@@ -7,6 +7,7 @@ Datenqualität umfasst jedoch nicht nur die Korrektheit von Daten, sondern auch 
 Ein Paper von Oliva, Zubcoff und Mazón zeigt den Einfluss von anderen Dimensionen, wie zb. Vollständigkeit auf die Erkennungsrate von Klassifikatoren \cite{espinosaoliva2011} Die Autoren schlagen vor den Aufbereitungsprozess und vor allem Datenqualität nicht nur auf die Korrektheit von Daten zu beziehen sondern auch auf die anderen Datenqualitätsdimensionen zu achten.
 
 \subsection{Datenqualitätsdimensionen}
+\label{subsec:dimensionen}
 Die Dimensionen Richtigkeit, Vollständigkeit, Konsistenz und Aktualität werden in den meisten Veröffentlichungen genannt, allerdings gibt es keinen Standard, weder im Bezug auf die verwendeten Dimensionen, noch die Definition der Dimensionen. \cite{scannapieco2002}
 Da keine allgemeine Empfehlung zur Verwendung von Dimensionen existiert werden in dieser Arbeit die Datenqualitätsdimensionen verwendet, die in den meisten Veröffentlichungen auftauchen.
 Dies kann dem Paper von Scannapieco und Catarci entnommen werden. 
@@ -76,8 +77,8 @@ Bei einer guten Datenqualität liegt das Ergebnis im IV. Quadrant. \cite{pipino2
 
 
 \section{Standardisierter Prozess}
-Der Erfolg von Projekten kann durch die Verwendung eines standardisierten Prozesses deutlich gesteigert werden.
-Einer der für Data Mining Projekte am weitesten verbreitet und eingesetzte Prozess ist der Cross Industry Standard Process for Data Mining (CRISP-DM). \cite{d.kelleher2015crispdm}
+Der Erfolg von Projekten kann durch die Verwendung eines standardisierten Prozesses deutlich gesteigert werden \cite{wirth2000}.
+Einer der für Data Mining Projekte am weitesten verbreitete und eingesetzte Prozess ist der Cross Industry Standard Process for Data Mining (CRISP-DM) \cite{d.kelleher2015crispdm}.
 Der Prozess beinhaltet die Phasen, die nötig sind, um ein Data Mining Projekt durchzuführen. 
 Des weiteren ist definiert, welche Aufgaben in der jeweiligen Phase anfallen und welche Ergebnisse die Phasen hervorbringen \cite{wirth2000}.
 
@@ -103,7 +104,7 @@ Die Bestandteile des Prozesses sind: \\
  \item \textbf{Daten verstehen} \\
  Um die Probleme mit Hilfe von Daten lösen zu können, müssen die vorhandenen Daten genau verstanden werden. Es ist wichtig zu verstehen, welche Daten in welcher Quelle vorhanden sind und um welche Datenarten es sich handelt. \cite{d.kelleher2015crispdm} 
  
- Diese Phase ist in \autoref{ch:data} umgesetzt. Dort werden die einzelnen Quellen untersucht und die Ausprägungen der Datenattribute analysiert. Des weiteren werden in dieser Phase die für die Lösung des skizzierten Problems die relevanten Daten aus den Quelltabellen ausgewählt. 
+ Diese Phase ist in \autoref{ch:data} umgesetzt. Dort werden die einzelnen Quellen untersucht und die Ausprägungen der Datenattribute analysiert. Des Weiteren werden in dieser Phase die für die Lösung des skizzierten Problems relevanten Daten aus den Quelltabellen ausgewählt. 
  
  \item \textbf{Daten vorbereiten} \\
  In dieser Phase wird die finale Tabelle aus den Quellen konstruiert, die zum Training der ML-Modelle verwendet wird. Typische Aufgaben in dieser Phase sind die Attributauswahl, Datenbereinigung und das Erzeugen von neuen Eigenschaften anhand der bestehenden Daten. \cite{wirth2000} Diese Tabelle wird auch als Analytical Base Table (ABT) bezeichnet \cite{d.kelleher2015crispdm}.
@@ -114,16 +115,16 @@ Die Bestandteile des Prozesses sind: \\
  \item \textbf{Modellieren} \\
  In dieser Phase werden verschiedene ML-Modelle ausgewählt und getestet.
  Die Modellierungsphase ist stark verbunden mit der Datenvorbereitung, da sich einige Probleme in den Daten erst erkennen lassen, wenn die Modelle angewendet werden. 
- Auch neue Ideen für die Konstruktion von Merkmalen anhand der bestehenden Daten kann in dieser Phase gefunden werden. \cite{wirth2000}
+ Auch neue Ideen für die Konstruktion von Merkmalen anhand der bestehenden Daten können in dieser Phase gefunden werden. \cite{wirth2000}
  
- Die Modellierung und das Testen verschiedener Ansätze ist in dem \autoref{sub:machine_learning} zu sehen. 
+ Modellierung und Tests verschiedener Ansätze ist in dem \autoref{sub:machine_learning} zu sehen. 
  Zur Umsetzung der Visualisierung wird an dieser Stelle kein Modell ausgewählt und getestet, sondern die verschiedenen Data Quality Dashboard Tools untersucht. 
- Des Weiteren wird in dieser Phase die Visualisierungen in dem evaluiertem Tool erzeugt und die Ergebnisse präsentiert. 
+ Des Weiteren wird in dieser Phase die Visualisierungen in dem evaluierten Tool erzeugt und die Ergebnisse präsentiert. 
  
  \item \textbf{Evaluieren} \\
  An dieser Stelle im Prozess wird nochmals überprüft, ob das Modell die Probleme, die in Phase 1 analysiert wurden, behebt.
  Das Hauptziel ist herauszufinden, ob ein Unternehmensziel nicht gut genug durchdacht wurde. \cite{wirth2000}
- Es wird außerdem evaluiert, ob die das trainierte Modell für den Einsatzzweck geeignet ist und nicht von Over- bzw. Underfitting geprägt ist. \cite{d.kelleher2015crispdm}
+ Es wird außerdem evaluiert, ob das trainierte Modell für den Einsatzzweck geeignet ist und nicht von Over- bzw. Underfitting geprägt ist. \cite{d.kelleher2015crispdm}
  
  Die Evaluation der Machine Learning Modelle erfolgt in \autoref{sub:evaluation}. 
  Dort werden die üblichen Metriken verwendet, um die Modelle zu testen und miteinander zu vergleichen. 

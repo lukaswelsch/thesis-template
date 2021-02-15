@@ -14,8 +14,8 @@ In dieser Bachelorarbeit wird die Datenqualität auf beispielhaft auf drei Arten
  Zum einen werden textuelle Daten untersucht, die von Nutzern händisch angelegt wurden und somit Rechtschreibfehler oder unbekannte Abkürzungen enthalten könnten. 
  \item \textbf{Besondere Attribute} \\
  Als weiterer Fall werden sensible Attribute betrachtet, deren Korrektheit von besonderer Bedeutung ist. Das Attribut muss von anderen Attributen abhängig sein, um mit Hilfe eines Klassifikators analysiert und verbessert zu werden.  %Das einen hohen Stellenwert hat? und von anderen Attributen abhängen 
- \item \textbf{Entwicklungsprozesse} \\
- Des weiteren werden die Entwicklungsprozesse untersucht. Für diese wird eine Möglichkeit dargestellt, wie mit Hilfe einer Visualisierung, geprüft werden kann, ob Fehler in den Daten durch Programm- oder Infrastrukturänderungen entstanden sind. 
+ \item \textbf{Datenextraktion} \\
+ Des weiteren werden die Datenextraktionen untersucht. Für diese wird eine Möglichkeit dargestellt, wie mit Hilfe einer Visualisierung, geprüft werden kann, ob Fehler in den Daten durch Programm- oder Infrastrukturänderungen entstanden sind. 
 \end{enumerate}
 
 
@@ -66,7 +66,7 @@ Die Inputdaten bestehen aus den folgenden Eigenschaften, die zum Training des Kl
 
 % Ein Beispiel für Daten, die aggregiert werden 
 
-Nach \cite{sokol2005} verwenden Auskunfteien bestimmte Daten als Grundlage des Risikoscores. 
+Nach \cite{petri2005} verwenden Auskunfteien bestimmte Daten als Grundlage des Risikoscores. 
 Darunter werden Kfz-Besitz, Wohndauer, verfügbares Einkommen, Berufsdaten und Haftende nicht im Data Warehouse gespeichert. 
 Somit ergibt sich folgende Liste relevanter Daten für die ML-Experimente. 
 
@@ -209,6 +209,7 @@ Dies ist notwendig, da in der Visualisierung ein historischer Kontext und die Ze
 
 
 % TODO Noch nötig? 
+% TODO sollte beschrieben werden. Daten können nicht verwendet werden, da zu unterschiedlich und dadurch wenig aussagekräftig (Aufgrund von umstellungen auf Delta, wieder komplettladungen etc) 
 %Des weiteren werden auch Daten verwendet, die generelle Informationen zu den Prozessen im DataWarehouse enthalten. 
 %Diese Daten umfassen die Anzahl der exportierten Datensätze aus den einzelnen Umgebungen.
 %Außerdem sind Metadaten zu den Prozessen vorhanden.

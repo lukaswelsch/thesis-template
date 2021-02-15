@@ -1,34 +1,28 @@
 \chapter{Anforderungsanalyse}\label{ch:anforderungen}
 Um aus dem Data Warehouse die geeigneten Daten zu extrahieren und Methoden zur Analyse und Visualisierung der Datenqualität auszuwählen, ist es zunächst notwendig eine Stakeholder-Analyse durchzuführen. 
-Auf Basis dieser Analyse ist es anschließen möglich die relevanten Daten aus dem Data Warehouse zu ermitteln, die für die Durchführung der Methoden notwendig sind. 
+Auf Basis dieser Analyse ist es anschließend möglich die relevanten Daten aus dem Data Warehouse zu ermitteln, die für die Durchführung der Methoden notwendig sind. 
 
 
 
 Für eine Datenqualität, die sich in einem Unternehmen etablieren kann, ist es nötig diese von den Gesichtspunkten aller Stakeholdern zu betrachten.
 Anhand einer Stakeholder-Analyse wird es möglich sein die Probleme der Datenqualität auf zwei Ebenen zu betrachten. 
 Zum einen benötigen die Business-User gute Datenqualität, um die richtigen Zinsen anhand des Risikoscorings zu vergeben und auf der anderen Seite benötigen die Entwickler eine Möglichkeit, um ihre ETL-Strecken zu überprüfen.
-Für diese beiden Probleme können zwei verschiedene Verfahren eingesetzt werden.
-Zur Identifikation und Überprüfung des Risikoscores kann ein Machine Learning Algorithmus trainiert werden, der die korrekten Werte vorhersagt und somit einen Aufschluss darüber gibt, wie viele Datensätze aktualisiert werden sollten.
-Um die ETL-Strecken zu analysieren sind die Metadaten zu den Prozessen nötig, die anzeigen, wie viele Daten an jedem Tag extrahiert wurden. 
-Auffälligkeiten können dann genutzt werden, um Maßnahmen einzuleiten.
-Hierfür bietet sich eine Visualisierung an, die in Echtzeit die Daten verarbeitet, analysiert und anschließend interpretierbar darstellt.
-Die beiden beschriebenen Verfahren werden in dem Kapitel Experimente durchgeführt. 
-%Datakitchen
+
 
 
 
 \section{Stakeholder-Analyse}
 \label{sec:Stakeholder-Analyse} 
+Würden die Stakeholder nur über falsche, unvollständige und veraltete Daten verfügen, könnte dies Verluste für die Bank zur Folge haben.
 Mit Hilfe einer Stakeholder-Analyse ist es möglich, die negativen Einflüsse zu erkennen und die positiven Einflüsse zu nutzen.
 Zum Anderen können die Erwartungen der einzelnen Stakeholder erkannt und die Projektziele richtig gewichtet werden. \\
-Die Stakeholder-Analyse wird nach folgenden Schritten durchgeführt: 
+Die Stakeholder-Analyse wird nach Schafer in folgenden Schritten durchgeführt \cite{schafer2009}: 
 
 \begin{enumerate}
  \item Stakeholder identifizieren
  \item Stakeholder Einfluss analysieren
- \item Aktionsplanung (Maßnahmen ableiten)
-\end{enumerate} \cite{salzsearch}
-
+ \item Aktionsplanung bzw. Maßnahmen ableiten
+\end{enumerate} 
 % Nach \cite{pipino2002} gibt es drei Stakeholder: the collector (Sammler) , custodians (Verwalter) and consumers (Verbraucher) of data products.  
 
 \subsection{Stakeholder identifizieren}
@@ -43,14 +37,7 @@ Diese werden im Folgenden genauer analysiert und beschrieben.
 Als Stakeholder lassen sich zunächst die Entwickler identifizieren.
 Diese sind für die Einhaltung einer guten Datenqualität unmittelbar wichtig, da diese die Extraktionsprozesse entwickeln, die zu Fehlern in der Datenqualität führen können.
 %Warum kann es überhaupt passieren, dass nicht alle Daten exportiert werden?
-Die Daten werden von einem legacy-System in das Data Warehouse übertragen, indem die Daten aus einer hierarchischen Datenbank als Datei abgelegt werden.
-Ein Prozess iteriert über alle Dateien und extrahiert die Daten, die anschließend neu strukturiert im Data Warehouse abgelegt werden.
-Aufgrund von einigen Problemen in der Extraktion kann es dazu führen, dass die Daten nicht korrekt extrahiert werden.
-Für diesen Fall gibt es eine Überwachung der Programme, die einen Fehler bei der Verarbeitung meldet.
-Wenn jedoch weniger oder mehr Daten verarbeitet werden als üblich deutet dies auch auf einen Fehler in der Extraktion hin. 
-Dieser Fall wird aktuell noch durch keinen Mechanismus oder Programm erkannt. 
-Als Lösung für dieses Problem bietet sich eine Visualisierung an, anhand der die Schwankungen aufgezeigt und dargestellt werden können. 
-Ein Entwickler kann anhand der Visualisierung erkennen, ob durch seine Programmänderung die Schwankung der Datenmengen innerhalb der saisonalen Schwankungen ist oder, ob seine Änderung einen neuen Fehler verursacht hat. 
+
 %Probleme: Keine Datei wird mehr an einem Ordner abgelegt, weil fehler im anderen System -> keiner merkt was, Daten nicht mehr aktuell
 %Probleme: Zweite Änderung während Extraktion läuft -> Primärschlüssel doppelt -> deduplizierung -> wenn fehler in Primkey, dann werden ganz viele Daten gelöscht, was ungewöhnlich ist
 %Allerdings werden die Dateien teilweise nicht schnell genug abgeholt und die Daten werden überschrieben
@@ -58,9 +45,7 @@ Ein Entwickler kann anhand der Visualisierung erkennen, ob durch seine Programm�
 
 \item \textbf{Business User}       \\
 Auf der anderen Seite gibt es die Business User, die beispielsweise die Gesamtbanksteuerung übernehmen.
-Bei diesem Teilgebiet wird errechnet, wie gut die Zinssätze sein dürfen, sodass die Bank Gewinn erzielt und gleichzeitig möglichst viele Kunden zufrieden stellen kann.
 Für diesen Stakeholder sind alle Dimensionen wichtig, da nur mit einer sehr guten Datenqualität eine optimale Gesamtbanksteuerung vorgenommen werden kann. 
-Würde der Stakeholder nur über falsche, unvollständige und veraltete Daten verfügen, könnte dies Verluste für die Bank zur Folge haben.
 Besonders entscheidend ist für diesen Stakeholder, dass der Wert für den Risikoscore richtig und aktuell ist.
 Beim Risikoscoring werden die Daten der Kunden an einen externen Dienstleister gesendet.
 Dieser berechnet einen Risikoscore, anhand dessen die Zinsvergabe erfolgt.
@@ -68,69 +53,127 @@ Dieser berechnet einen Risikoscore, anhand dessen die Zinsvergabe erfolgt.
 
 \item \textbf{Bankmitarbeiter}      \\
 Des weiteren ist der Bankmitarbeiter Bestandteil der Kreditvergabe. 
-Die Kreditvergabe erfolgt anhand einer Bewertung des Kunden, je nachdem wie gut der Risikoscore des Kunden ist, umso bessere Zinssätze erhält dieser.
+Die Kreditvergabe erfolgt anhand einer Bewertung des Kunden.
+Je nachdem wie gut der Risikoscore des Kunden ist, umso bessere Zinssätze erhält dieser.
 Für den Bankmitarbeiter ist es wichtig, dass die Daten zum Risikoscoring sowohl richtig als auch aktuell sind.
 
 \end{itemize}
 
+\newpage
+\subsection{Stakeholder Einfluss analysieren}
+Die beschriebenen Stakeholder werden mit ihren Erwartungen an das Projekt in der folgenden \autoref{fig:betroffenheitsanalyse} dargestellt.
+
+\begin{table}[ht]
+\begin{tabular}[ht]{l|p{2cm}|>{\centering}p{1.5cm}|p{2.5cm}|c|c|p{2.3cm}}
+ID & Wer        & Betroffen-heit & Erwartung & Macht & Einstellung & Maßnahmen  \\ \hline
+S1 & Entwickler & mittel         & Fehler in der Entwicklung werden angezeigt; Wenig Programmieraufwand & gering & Neutral & Notwendigkeit erklären, Zeitvorteil aufzeigen  \\ \hline
+S2 & Business User & hoch    & Daten sollten fehlerfrei und aktuell sein & gering & Positiv & - \\ \hline
+S3 & Bank-mitarbeiter & hoch         & Daten müssen immer verfügbar und richtig sein & hoch & Positiv & -  \\
+\end{tabular}
+\caption{Darstellung der Betroffenheit der Stakeholder}
+\label{fig:betroffenheitsanalyse}
+\end{table}
+
+In der nachfolgenden \autoref{fig:interessedimension} werden die Dimensionen aus \autoref{subsec:dimensionen} den Stakeholdern zugeordnet.
+\begin{table}[ht]
+\begin{tabular}[h]{l|p{3cm}|p{7.7cm}}
+Stakeholder & Dimension & Begründung \\ \hline
+Entwickler & Vollständigkeit, Konsistenz & Die Entwickler gehen davon aus, dass die Daten vom Quellsystem richtig sind. Für sie ist deshalb die Dimension Vollständigkeit interessant, da sie wissen müssen, ob die richtige Anzahl an Daten exportiert wurden. Des Weiteren sind Sie für die Einhaltung der Konsistenz verantwortlich. \\ \hline
+Business User & Alle Dimensionen & Um eine korrekte Gesamtbanksteuerung durchführen zu können ist es notwendig, dass alle Daten vollständig, richtig, aktuell und konsistent sind.  \\ \hline
+Bankmitarbeiter & Richtigkeit, Vollständigkeit & Die Bankmitarbeiter verlassen sich darauf, dass die Daten richtig weiterverarbeitet werden. Die Verantwortung der korrekten Eingabe von Daten liegt bei den Bankmitarbeitern. \\
+\end{tabular}
+\caption{Dimensionen für die Stakeholder}
+\label{fig:interessedimension}
+\end{table}
+
+%Für Welche Stakeholder kann sollte welches Verfahren angewendet werden?
+%- Business User: Risikoscoring sollte immer aktuell sein, dabei kann ein ML Verfahren verwendet werden, um die Daten zu klassifizieren und bei großer Abweichung können diese Daten dann aktualisiert oder neu angefordert werden.
+
+%- Bank Mitarbeiter: ?
+ 
 
 
 
+\subsection{Aktionsplanung}
+Als Ergebnis der Stakeholderanalyse werden die Aktionen zur Verbesserung der Probleme aufgezeigt. 
+Zunächst werden hierfür die Probleme dargestellt, die konkreten Lösungen werden anschließend im \autoref{ch:method} abgeleitet.
+Insgesamt können die Probleme der Stakeholder in fünf Kategorien aufgeteilt werden, die nachfolgend genauer erläutert werden. 
+Für die Probleme in textuellen Daten, besondere Attribute und Datenextraktionen werden anschließend im \autoref{ch:data} die passenden Daten ausgewählt und extrahiert.
+
+
+Da das Risikoscoring für die Bank die wichtigste Stellgröße ist, um höhere Gewinne zu erlangen, wird dieses als Beispielszenario für die Analyse der Datenqualität verwendet.
+Bei diesem Teilgebiet wird errechnet, wie gut die Zinssätze sein dürfen, sodass die Bank Gewinn erzielt und gleichzeitig möglichst viele Kunden zufrieden stellen kann. \cite{petri2005}
+
+
+\textbf{Datenbankebene} \\
+Es ist notwendig die Datenbankschemas gut und exakt zu definieren, sodass keine null-Werte an Stellen eingefügt werden, an denen es keine null-Werte geben darf.
+Diese Lücken in den Daten sollten immer mit einem Default-Wert belegt werden und null-Values zu einem Abbruch der ETL-Strecken führen.
+Dadurch kann die Dimension der Vollständigkeit verbessert werden.
+Da dies Entscheidungen in der Datenbankmodellierung betreffen, werden diese nicht in dieser Arbeit hinterfragt.
+Im Rahmen dieser Arbeit werden zunächst ausschließlich Möglichkeiten geschaffen, um die Probleme in der Datenqualität zu analysieren und darzustellen. 
+
+
+\textbf{Entwicklungsprozesse} \\
+Es sollten auch für die Entwicklungsprozesse Verfahren entwickelt werden, um die Datenqualität zu verbessern.
+Dies beinhaltet unter anderem eine Peer-Review, um die Codequalität sicherzustellen, sowie statische Code-Analysen.
+Eine bessere Codequalität führt zu einer besseren Datenqualität, da keine bzw. weniger menschliche Fehler im System erzeugt werden.
+Eine Peer-Review und statische Code-Analyse werden bereits in dem Unternehmen eingesetzt, um die Qualität zu verbessern. 
+Es ist deshalb nicht notwendig weitere Aktionen für diesen Bereich durchzuführen.
+
+\textbf{Textuelle und fehlende Daten} \\
 Nicht nur Fehler in numerischen Daten, sondern auch in Texten sind festzustellen. 
 Dies führt zu falschen Interpretationen bzw. dazu, dass ein Kunde nicht den richtigen Risikoscore erhält. 
 Auch fehlende Daten führen zu Fehlern.
 Dies ist ein Fall, der sowohl für den Kunden als auch für die Bank selbst zu einem Problem führt. 
 Der Kunde erhält nicht den für ihn bestmöglichen Risikoscore und die Bank verliert einen Kunden, da diese verglichen mit der Konkurrenz nicht den besten Kredit vergeben kann. 
-Es kann allerdings auch passieren, dass die Bank dem Kunden einen besseren Score vergibt, da der Beruf falsch interpretiert wird und muss somit ein höheres Risiko eingehen und die Bank kann ihr Risiko nicht korrekt abschätzen. 
+Es kann allerdings auch passieren, dass die Bank dem Kunden einen besseren Score vergibt, da der Beruf falsch interpretiert wird und muss somit ein höheres Risiko eingehen und die Bank kann ihr Risiko nicht korrekt abschätzen.
 
 
-
-
-
-
-Die beschriebenen Stakeholder werden mit ihren Erwartungen an das Projekt in der folgenden Grafik dargestellt.
-\subsection{Betroffenheitsanalyse}
-\begin{tabular}[h]{l|p{2cm}|>{\centering}p{1.5cm}|p{2.5cm}|c|c|p{3cm}}
-ID & Wer        & Betroffen-heit & Erwartung & Macht & Einstellung & Maßnahmen  \\ \hline
-S1 & Entwickler & m             & Fehler in der Entwicklung werden angezeigt; Wenig Programmieraufwand & g & Neutral & Erklärung der Notwendigkeit, Zeitvorteil aufzeigen  \\ \hline
-S2 & Business User & h          & Daten sollten fehlerfrei und aktuell sein & g & Positiv & - \\ \hline
-S3 & Bank-mitarbeiter & h          & Daten müssen immer verfügbar und richtig sein & h & Positiv & - \\
-\end{tabular}
-
-
-Welchen Stakeholder interessiert welche Dimension?
-
-\begin{tabular}[h]{l|l|l}
-Stakeholder & Dimension & Begründung \\ \hline
-Entwickler & Vollständigkeit & Der Entwickler geht davon aus, dass die Daten die vom Quellsystem abgeholt werden richtig sind. Für ihn ist deshalb die Dimension Vollständigkeit interessant, da er wissen muss, ob die richtige Anzahl an Daten exportiert wurden. \\ \hline
-Business User & Alle Dimensionen & \\ \hline
-Bankmitarbeiter & Keine Dimension & Geht davon aus, dass die Datenqualität schon geprüft wurde \\
-\end{tabular}
-
-
-Für Welche Stakeholder kann sollte welches Verfahren angewendet werden?
-- Business User: Risikoscoring sollte immer aktuell sein, dabei kann ein ML Verfahren verwendet werden, um die Daten zu klassifizieren und bei großer Abweichung können diese Daten dann aktualisiert oder neu angefordert werden.
-
-- Bank Mitarbeiter: ?
-- 
-
-In dieser Bachelorarbeit wird die Verwendung von Machine Learning Verfahren zur Verbesserung der Datenqualität untersucht.
+\textbf{Besondere Attribute} \\
+Des Weiteren wird in dieser Bachelorarbeit die Verwendung von Machine Learning Verfahren zur Verbesserung der Datenqualität untersucht.
 Deshalb bietet sich das Thema Risikoscoring am besten an, da es feste Ausgangswerte (Labels) bietet, die trainiert werden können.
 Der trainierte Klassifikator kann anschließend verwendet werden, um zu berechnen, ob ältere Risikoscorings vom Ergebnis des Klassifikators abweichen.
-Denn es können sich Attribute aktualisieren, die einen positiven oder negativen Einfluss des Risikoscorings zur Folge haben. 
-Allerdings wird das Risikoscoring nicht regelmäßig aktualisiert, da eine Aktualisierung Geld kostet.
-Grundvoraussetzung für dieses Vorhaben ist die Risikoscorings anhand von aktuellen Daten mit hoher \colorbox{green}{Präzision} vorherzusagen. 
-Dafür werden nachfolgend Klassifikatoren ausgewählt und anschließend im Kapitel Experimente geprüft und ausgewertet.\\
-Allerdings sollten auch für die anderen Stakeholder Verfahren entwickelt werden, um die Datenqualität zu verbessern.
-Dies beinhaltet unter anderem eine Peer-Review, um die Codequalität sicherzustellen, sowie statische Code-Analysen.
-Eine bessere Codequalität führt zu einer besseren Datenqualität, da keine bzw. weniger menschliche Fehler im System erzeugt werden.
-Des weiteren ist es notwendig die Datenbankschemas gut und exakt zu definieren, sodass keine null-Werte an Stellen eingefügt werden, an denen es keine null-Werte geben darf.
-Diese Lücken in den Daten sollten immer mit einem Default-Wert belegt werden und null-Values zu einem Abbruch der ETL-Strecken führen.
-Dadurch kann die Dimension der Vollständigkeit verbessert werden.
-Auch Log-Dateien die Aussagen über den ETL-Prozess liefern, können hilfreich sein und sollten ausgewertet werden.
-\colorbox{green}{Aufzeigen, warum es wichtig ist auch Visualisierungen zu verwenden, um Datenqualität zu analysieren}
+Deshalb es können sich Attribute aktualisieren, die einen positiven oder negativen Einfluss des Risikoscorings zur Folge haben. 
+Allerdings wird das Risikoscoring nicht regelmäßig aktualisiert, da eine Aktualisierung hohe Kosten verursacht.
+Grundvoraussetzung für dieses Vorhaben ist die Risikoscorings anhand von aktuellen Daten mit hoher Gewissheit vorherzusagen. 
+Das bedeutet, dass die Ergebnisse der Klassifikation nach den in \autoref{ch:method} definierten Metriken gut abschneiden müssen. 
+Dafür werden nachfolgend Klassifikatoren ausgewählt und anschließend im \autoref{ch:experiments} geprüft und ausgewertet.
+
+\textbf{Probleme in den Datenextraktionen} \\
+Die Daten werden vom Großrechner (IBM Host) in das Data Warehouse übertragen, indem die Daten aus einer hierarchischen Datenbank als Datei abgelegt werden.
+Ein Prozess iteriert über alle Dateien und extrahiert die Daten, die anschließend neu strukturiert im Data Warehouse abgelegt werden.
+Aufgrund von einigen Problemen in der Extraktion kann es dazu führen, dass die Daten nicht korrekt extrahiert werden.
+Für diesen Fall gibt es eine Überwachung der Programme, die einen Fehler bei der Verarbeitung meldet.
+Wenn jedoch weniger oder mehr Daten verarbeitet werden als üblich deutet dies auch auf einen Fehler in der Extraktion hin. 
+Dieser Fall wird aktuell noch durch keinen Mechanismus oder Programm erkannt. 
+Als Lösung für dieses Problem bietet sich eine Visualisierung an, anhand der die Schwankungen aufgezeigt und dargestellt werden können. 
+Ein Entwickler kann anhand der Visualisierung erkennen, ob durch seine Programmänderung die Schwankung der Datenmengen innerhalb der saisonalen Schwankungen ist oder, ob seine Änderung einen neuen Fehler verursacht hat. 
+
+
+
+
 
 \subsection{Anforderungen an den Klassifikator}
+
+Eine Anforderung: 
+
+Sobald der Entwickler ein Programm fertiggestellt hat, muss die Visualisierung die Möglichkeit bieten eine Auskunft zur Datenqualität zu geben.
+
+Wenn der Klassifikator zur Klassifikation eingesetzt wird, muss der Klassifikator den Metriken eine Accuracy und Precision von mindestens 90 Prozent erreichen. 
+
+Wenn sich die Daten ändern, sollte die Visualisierung automatisch aktualisiert werden.
+
+Wenn eine Datenqualitätsbericht angefordert wird, muss die Visualisierung den Anteil der Fehler in Textdaten anzeigen.
+
+Wenn eine Datenqualitätsbericht angefordert wird, muss die Visualisierung den Anteil an fehlenden Daten anzeigen. 
+
+Wenn eine Datenqualitätsbericht angefordert wird, muss die Visualisierung den Zusammenhang zwischen saisonalen Ereignissen darstellen. 
+
+Wenn das Projekt in der Praxis angewendet wird, muss das Budget eingehalten werden. 
+
+Um die Datenqualität zu berechnen, sollte kein händischer Aufwand nötig sein. 
+
+
 Damit der trainierte Klassifikator verwendet werden kann, um weniger Risikoswerte bei dem externen Ratingfirma abzufragen, muss der Klassifikator einige Anforderungen erfüllen.
 Diese können als Fragen gestellt werden, die anschließend mit Hilfe der ML-Experimente beantwortet werden können. 
 Diese Fragen umfassen auch die zuvor aufgestellten Thesen, zur Verwendung von bestimmten Datensätzen als zusätzliche Verbesserung der Klassifikation. 
